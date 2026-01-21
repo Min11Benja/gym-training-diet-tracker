@@ -1,48 +1,72 @@
 "use client";
 
 import { useState } from "react";
-// import { useMutation, useQuery } from "convex/react";
-// import { api } from "@/convex/_generated/api";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
+import { User, Ruler, Target, ArrowRight } from "lucide-react";
 
 export default function OnboardingPage() {
     const router = useRouter();
-    // We'll assume we access the current user via a query, but we haven't created it yet. 
-    // For now, we'll just build the form.
+    const updateProfile = useMutation(api.users.updateProfile);
 
     const [role, setRole] = useState<"coach" | "client">("client");
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+    const [sex, setSex] = useState("male");
     const [height, setHeight] = useState("");
     const [goal, setGoal] = useState("fat_loss");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Placeholder for mutation
-    // const updateUser = useMutation(api.users.updateProfile);
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Implementation pending backend mutation availability
-        console.log("Saving profile", { role, height, goal });
-        // Simulate redirect
-        router.push(role === "coach" ? "/coach/dashboard" : "/dashboard/workouts");
+        if (!name || !height) {
+            alert("Please fill in all required fields");
+            return;
+        }
+
+        setIsSubmitting(true);
+        try {
+            await updateProfile({
+                name,
+                role,
+                age: age ? Number(age) : undefined,
+                sex,
+                height: Number(height),
+                goal: goal as "fat_loss" | "muscle_gain" | "recomp"
+            });
+            router.push(role === "coach" ? "/coach/dashboard" : "/dashboard");
+        } catch (err) {
+            console.error(err);
+            alert("Failed to save profile");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-white p-4">
-            <div className="w-full max-w-md space-y-8 rounded-xl bg-zinc-900 p-8 border border-zinc-800">
-                <h2 className="text-2xl font-bold text-center">Complete Your Profile</h2>
-                <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="w-full max-w-md space-y-8">
+                <div className="text-center">
+                    <h1 className="text-4xl font-bold tracking-tight mb-2">Welcome to CoachTrack</h1>
+                    <p className="text-zinc-400">Let&apos;s set up your profile</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-900 p-8 rounded-3xl border border-zinc-800 shadow-xl">
+                    {/* Role Selection */}
                     <div>
-                        <label className="block text-sm font-medium">I am a...</label>
-                        <div className="mt-2 flex gap-4">
+                        <label className="block text-sm font-semibold text-zinc-400 mb-3 uppercase tracking-wider">I am a...</label>
+                        <div className="grid grid-cols-2 gap-3">
                             <button
                                 type="button"
-                                className={`flex-1 py-2 rounded-md ${role === "coach" ? "bg-blue-600" : "bg-zinc-800"}`}
+                                className={`py-4 rounded-2xl font-bold transition-all ${role === "coach" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/30 scale-[1.02]" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"}`}
                                 onClick={() => setRole("coach")}
                             >
                                 Coach
                             </button>
                             <button
                                 type="button"
-                                className={`flex-1 py-2 rounded-md ${role === "client" ? "bg-blue-600" : "bg-zinc-800"}`}
+                                className={`py-4 rounded-2xl font-bold transition-all ${role === "client" ? "bg-blue-600 text-white shadow-lg shadow-blue-900/30 scale-[1.02]" : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"}`}
                                 onClick={() => setRole("client")}
                             >
                                 Client
@@ -50,37 +74,93 @@ export default function OnboardingPage() {
                         </div>
                     </div>
 
+                    {/* Name */}
                     <div>
-                        <label className="block text-sm font-medium">Height (cm)</label>
-                        <input
-                            type="number"
-                            value={height}
-                            onChange={(e) => setHeight(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-zinc-700 bg-zinc-800 text-white px-3 py-2"
-                            placeholder="175"
-                        />
+                        <label className="block text-xs font-medium text-zinc-500 ml-1 mb-2">Full Name *</label>
+                        <div className="relative">
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="w-full bg-zinc-950 rounded-2xl p-4 pl-12 border border-zinc-800 focus:outline-none focus:border-blue-500 font-semibold"
+                                placeholder="John Doe"
+                                required
+                            />
+                            <User className="absolute left-4 top-4 text-zinc-600" size={20} />
+                        </div>
                     </div>
 
+                    {/* Age & Sex */}
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-xs font-medium text-zinc-500 ml-1 mb-2">Age</label>
+                            <input
+                                type="number"
+                                value={age}
+                                onChange={(e) => setAge(e.target.value)}
+                                className="w-full bg-zinc-950 rounded-2xl p-4 border border-zinc-800 focus:outline-none focus:border-blue-500 text-center font-bold"
+                                placeholder="25"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-medium text-zinc-500 ml-1 mb-2">Sex</label>
+                            <select
+                                value={sex}
+                                onChange={(e) => setSex(e.target.value)}
+                                className="w-full bg-zinc-950 rounded-2xl p-4 border border-zinc-800 focus:outline-none focus:border-blue-500 font-semibold appearance-none text-center"
+                            >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* Height */}
                     <div>
-                        <label className="block text-sm font-medium">Goal</label>
-                        <select
-                            value={goal}
-                            onChange={(e) => setGoal(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-zinc-700 bg-zinc-800 text-white px-3 py-2"
-                        >
-                            <option value="fat_loss">Fat Loss</option>
-                            <option value="muscle_gain">Muscle Gain</option>
-                            <option value="recomp">Recomposition</option>
-                        </select>
+                        <label className="block text-xs font-medium text-zinc-500 ml-1 mb-2">Height (cm) *</label>
+                        <div className="relative">
+                            <input
+                                type="number"
+                                value={height}
+                                onChange={(e) => setHeight(e.target.value)}
+                                className="w-full bg-zinc-950 rounded-2xl p-4 pl-12 border border-zinc-800 focus:outline-none focus:border-blue-500 font-bold text-xl"
+                                placeholder="175"
+                                required
+                            />
+                            <Ruler className="absolute left-4 top-4 text-zinc-600" size={20} />
+                        </div>
+                    </div>
+
+                    {/* Goal */}
+                    <div>
+                        <label className="block text-xs font-medium text-zinc-500 ml-1 mb-2">Primary Goal</label>
+                        <div className="relative">
+                            <select
+                                value={goal}
+                                onChange={(e) => setGoal(e.target.value)}
+                                className="w-full bg-zinc-950 rounded-2xl p-4 pl-12 border border-zinc-800 focus:outline-none focus:border-blue-500 font-semibold appearance-none"
+                            >
+                                <option value="fat_loss">Fat Loss</option>
+                                <option value="muscle_gain">Muscle Gain</option>
+                                <option value="recomp">Recomposition</option>
+                            </select>
+                            <Target className="absolute left-4 top-4 text-zinc-600" size={20} />
+                        </div>
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full bg-blue-600 py-2 rounded-md font-semibold hover:bg-blue-500"
+                        disabled={isSubmitting}
+                        className="w-full bg-blue-600 py-4 rounded-2xl font-bold hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-900/20 active:scale-95 transition-all flex items-center justify-center gap-2"
                     >
-                        Get Started
+                        {isSubmitting ? "Saving..." : "Get Started"}
+                        {!isSubmitting && <ArrowRight size={20} />}
                     </button>
                 </form>
+
+                <p className="text-center text-xs text-zinc-600">
+                    Your information is secure and will only be used to personalize your experience.
+                </p>
             </div>
         </div>
     );
