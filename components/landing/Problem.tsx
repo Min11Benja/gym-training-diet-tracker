@@ -10,14 +10,14 @@ export default function Problem() {
     const t = content[language].problem;
 
     return (
-        <section id="problem" className="py-24 bg-zinc-50 dark:bg-zinc-950 relative border-t border-zinc-200 dark:border-white/5">
+        <section id="problem" className="py-24 bg-white/5  relative border-t border-white/10 dark:border-white/5">
             <div className="container px-6 mx-auto">
                 <div className="max-w-3xl mx-auto text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
                         {t.heading.title} <br />
-                        <span className="text-zinc-400 dark:text-zinc-600">{t.heading.subtitle}</span>
+                        <span className="text-zinc-400 dark:text-gray-400">{t.heading.subtitle}</span>
                     </h2>
-                    <p className="text-zinc-600 dark:text-zinc-400 text-lg">
+                    <p className="text-gray-400 dark:text-zinc-400 text-lg">
                         {t.description}
                     </p>
                 </div>
@@ -42,18 +42,18 @@ export default function Problem() {
                     {/* Right Col: The Failed Fix */}
                     <div className="space-y-8">
                         <div>
-                            <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 mb-4">{t.rightCol.title}</h3>
+                            <h3 className="text-xl font-semibold text-white dark:text-zinc-100 mb-4">{t.rightCol.title}</h3>
                             <ul className="space-y-3">
                                 {t.rightCol.items.map((item: string, i: number) => (
-                                    <li key={i} className="p-4 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400">
+                                    <li key={i} className="p-4 bg-[#101010] dark:bg-zinc-900 rounded-lg border border-white/10 dark:border-zinc-800 text-gray-400 dark:text-zinc-400">
                                         {item}
                                     </li>
                                 ))}
                             </ul>
                         </div>
 
-                        <div className="p-6 bg-white dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-zinc-800 text-center">
-                            <p className="text-xl font-medium text-zinc-900 dark:text-white mb-2">{t.rightCol.footer}</p>
+                        <div className="p-6 bg-[#101010] dark:bg-zinc-900/50 rounded-xl border border-white/10 dark:border-zinc-800 text-center">
+                            <p className="text-xl font-medium text-white  mb-2">{t.rightCol.footer}</p>
                             <p className="text-red-400 font-bold uppercase tracking-wider text-sm">{t.rightCol.tagline}</p>
                         </div>
                     </div>

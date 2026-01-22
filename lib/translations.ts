@@ -31,6 +31,16 @@ export const content = {
                 primary: "Join the Coach Beta",
                 secondary: "See How It Improves Retention",
             },
+            benefits: {
+                title: "Built for coaches who want:",
+                list: [
+                    "Higher client adherence",
+                    "Fewer ghosted check-ins",
+                    "Less emotional burnout",
+                    "More long-term clients",
+                ],
+                footer: "Without adding more WhatsApp messages to your day.",
+            },
             socialProof: [
                 "Higher adherence",
                 "Fewer ghosted check-ins",
@@ -268,6 +278,16 @@ export const content = {
             cta: {
                 primary: "Unirse a la Beta",
                 secondary: "Ver Cómo Mejora la Retención",
+            },
+            benefits: {
+                title: "Creado para coaches que buscan:",
+                list: [
+                    "Mayor adherencia",
+                    "Menos check-ins ignorados",
+                    "Menos desgaste emocional",
+                    "Más clientes a largo plazo",
+                ],
+                footer: "Sin añadir más mensajes de WhatsApp a tu día.",
             },
             socialProof: [
                 "Mayor adherencia",

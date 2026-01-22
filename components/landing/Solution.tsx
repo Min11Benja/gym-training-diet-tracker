@@ -9,7 +9,7 @@ export default function Solution() {
     const { language } = useLanguage();
     const t = content[language].solution;
     return (
-        <section id="solution" className="py-24 bg-white dark:bg-zinc-900 relative overflow-hidden">
+        <section id="solution" className="py-24 bg-[#101010] dark:bg-zinc-900 relative overflow-hidden">
             {/* Glow effect */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -19,10 +19,10 @@ export default function Solution() {
                         <RefreshCcw className="h-4 w-4" />
                         {t.badge}
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-6">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white  mb-6">
                         {t.heading}
                     </h2>
-                    <p className="text-lg text-zinc-600 dark:text-zinc-400">
+                    <p className="text-lg text-gray-400 dark:text-zinc-400">
                         {t.subheading}
                     </p>
                 </div>
@@ -41,7 +41,7 @@ export default function Solution() {
                 </div>
 
                 <div className="mt-16 text-center">
-                    <h3 className="text-2xl font-bold text-zinc-900 dark:text-white max-w-2xl mx-auto">
+                    <h3 className="text-2xl font-bold text-white  max-w-2xl mx-auto">
                         {t.footer.line1} <br />
                         <span className="text-indigo-400">{t.footer.highlight}</span>
                     </h3>
@@ -53,17 +53,17 @@ export default function Solution() {
 
 function ComparisonCard({ bad, good }: { bad: { quote: string, label: string }, good: { quote: string, label: string } }) {
     return (
-        <div className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-1 overflow-hidden">
-            <div className="p-6 bg-zinc-100/50 dark:bg-zinc-900/50 border-b border-zinc-200 dark:border-zinc-800">
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">{bad.label}</span>
-                <p className="text-zinc-600 dark:text-zinc-400 italic mt-2 text-lg">{bad.quote}</p>
+        <div className="bg-white/5  border border-white/10 dark:border-zinc-800 rounded-2xl p-1 overflow-hidden">
+            <div className="p-6 bg-zinc-100/50 dark:bg-zinc-900/50 border-b border-white/10 dark:border-zinc-800">
+                <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">{bad.label}</span>
+                <p className="text-gray-400 dark:text-zinc-400 italic mt-2 text-lg">{bad.quote}</p>
             </div>
             <div className="p-6 bg-indigo-500/5">
                 <span className="text-xs font-bold text-indigo-400 uppercase tracking-widest flex items-center gap-2">
                     <CheckCircle2 className="h-4 w-4" />
                     {good.label}
                 </span>
-                <p className="text-zinc-900 dark:text-white font-medium mt-2 text-lg">{good.quote}</p>
+                <p className="text-white  font-medium mt-2 text-lg">{good.quote}</p>
             </div>
         </div>
     )

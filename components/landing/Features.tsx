@@ -12,13 +12,13 @@ export default function Features() {
     const icons = [Utensils, Dumbbell, BarChart3, MessageCircle];
 
     return (
-        <section id="features" className="py-24 bg-white dark:bg-zinc-950">
+        <section id="features" className="py-24 bg-[#101010] ">
             <div className="container px-6 mx-auto">
                 <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-white mb-6">
+                    <h2 className="text-3xl md:text-5xl font-bold text-white  mb-6">
                         {t.heading}
                     </h2>
-                    <p className="text-zinc-600 dark:text-zinc-400">
+                    <p className="text-gray-400 dark:text-zinc-400">
                         {t.subheading}
                     </p>
                 </div>
@@ -60,12 +60,12 @@ function FeatureBlock({ icon: Icon, title, subtitle, description, result, points
                     <Icon className="h-5 w-5" />
                     {subtitle}
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white">{title}</h3>
-                <p className="text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                <h3 className="text-3xl md:text-4xl font-bold text-white ">{title}</h3>
+                <p className="text-lg text-gray-400 dark:text-zinc-400 leading-relaxed">
                     {description}
                 </p>
                 <div className="pl-6 border-l-2 border-indigo-500/30 space-y-4">
-                    <p className="text-zinc-900 dark:text-white font-medium">Result: <span className="text-zinc-600 dark:text-zinc-400 font-normal">{result}</span></p>
+                    <p className="text-white  font-medium">Result: <span className="text-gray-400 dark:text-zinc-400 font-normal">{result}</span></p>
                 </div>
                 <ul className="grid gap-3">
                     {points.map((point: string, i: number) => (
@@ -78,9 +78,9 @@ function FeatureBlock({ icon: Icon, title, subtitle, description, result, points
             </div>
 
             {/* Visual Placeholder for Feature UI */}
-            <div className="flex-1 w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl aspect-square md:aspect-[4/3] flex items-center justify-center relative overflow-hidden group">
+            <div className="flex-1 w-full bg-white/5 dark:bg-zinc-900 border border-white/10 dark:border-zinc-800 rounded-2xl aspect-square md:aspect-[4/3] flex items-center justify-center relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
-                <div className="text-zinc-500 dark:text-zinc-600 font-mono text-sm border border-zinc-200 dark:border-zinc-800 p-4 rounded bg-white/50 dark:bg-zinc-950/50 backdrop-blur">
+                <div className="text-gray-500 dark:text-gray-400 font-mono text-sm border border-white/10 dark:border-zinc-800 p-4 rounded bg-[#101010]/50 /50 backdrop-blur">
                     UI Preview: {title}
                 </div>
             </div>
