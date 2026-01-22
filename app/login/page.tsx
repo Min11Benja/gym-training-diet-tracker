@@ -65,7 +65,7 @@ export default function LoginPage() {
                             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black shadow-lg shadow-emerald-500/20 dark:shadow-[#B2FF59]/20 group-hover:scale-105 transition-transform">
                                 <LayoutDashboard size={18} />
                             </div>
-                            <span className="font-bold text-xl text-zinc-900 dark:text-white tracking-tight">CoachTrack</span>
+                            <span className="font-bold text-xl text-zinc-900 dark:text-white tracking-tight">CoachEnControl</span>
                         </Link>
                         <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
                             Welcome Back

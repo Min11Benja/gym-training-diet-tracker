@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "CoachTrack",
+  title: "CoachEnControl",
   description: "Remote coaching platform for gym training and diet tracking.",
 };
 

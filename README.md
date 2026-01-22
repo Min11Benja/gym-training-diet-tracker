@@ -1,6 +1,6 @@
-# CoachTrack
+# CoachEnControl
 
-CoachTrack is a remote coaching platform that allows gym coaches to monitor client compliance, adjust workouts/diets dynamically, and communicate largely via WhatsApp.
+CoachEnControl is a remote coaching platform that allows gym coaches to monitor client compliance, adjust workouts/diets dynamically, and communicate largely via WhatsApp.
 
 ## SYSTEM GOAL
 

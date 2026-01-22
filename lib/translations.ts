@@ -1,7 +1,7 @@
 export const content = {
     en: {
         navbar: {
-            brand: "CoachTrack",
+            brand: "CoachEnControl",
             links: {
                 howItWorks: "How It Works",
                 problem: "The Problem",
@@ -25,7 +25,7 @@ export const content = {
             },
             subtitle: {
                 text: "And every missed meal, bad workout, or “cheat day” costs you retention.",
-                strong: "CoachTrack rescues bad days before they turn into dropouts.",
+                strong: "CoachEnControl rescues bad days before they turn into dropouts.",
             },
             cta: {
                 primary: "Join the Coach Beta",
@@ -78,7 +78,7 @@ export const content = {
         solution: {
             badge: "The Solution",
             heading: "What If Bad Days Didn’t Kill Progress?",
-            subheading: "CoachTrack turns mistakes into course corrections — automatically.",
+            subheading: "CoachEnControl turns mistakes into course corrections — automatically.",
             cards: {
                 card1: {
                     bad: { label: "Instead of:", quote: "“I messed up, what’s the point?”" },
@@ -249,7 +249,7 @@ export const content = {
     },
     es: {
         navbar: {
-            brand: "CoachTrack",
+            brand: "CoachEnControl",
             links: {
                 howItWorks: "Cómo Funciona",
                 problem: "El Problema",
@@ -273,7 +273,7 @@ export const content = {
             },
             subtitle: {
                 text: "Y cada comida perdida, mal entrenamiento o 'día trampa' te cuesta retención.",
-                strong: "CoachTrack rescata los días malos antes de que se conviertan en abandonos.",
+                strong: "CoachEnControl rescata los días malos antes de que se conviertan en abandonos.",
             },
             cta: {
                 primary: "Unirse a la Beta",
@@ -326,7 +326,7 @@ export const content = {
         solution: {
             badge: "La Solución",
             heading: "¿Qué Pasaría si los Días Malos No Mataran el Progreso?",
-            subheading: "CoachTrack convierte los errores en correcciones de rumbo — automáticamente.",
+            subheading: "CoachEnControl convierte los errores en correcciones de rumbo — automáticamente.",
             cards: {
                 card1: {
                     bad: { label: "En lugar de:", quote: "“La cagué, ¿para qué seguir?”" },

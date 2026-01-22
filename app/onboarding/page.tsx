@@ -79,7 +79,7 @@ export default function OnboardingPage() {
 
             <div className="w-full max-w-md space-y-8">
                 <div className="text-center space-y-3">
-                    <h1 className="text-4xl font-bold tracking-tight">Welcome to CoachTrack</h1>
+                    <h1 className="text-4xl font-bold tracking-tight">Welcome to CoachEnControl</h1>
                     <p className="text-zinc-600 dark:text-zinc-400">Let&apos;s set up your profile</p>
                 </div>
 

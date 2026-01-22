@@ -94,7 +94,7 @@ export async function submitSmartForm(data: SmartFormData) {
         // In a real scenario we'd throw if no key, but for dev robustness:
         if (process.env.RESEND_API_KEY) {
             await resend.emails.send({
-                from: "CoachTrack Beta <onboarding@resend.dev>", // Default Resend sender for testing, user should update
+                from: "CoachEnControl Beta <onboarding@resend.dev>", // Default Resend sender for testing, user should update
                 to: ["delivered@resend.dev"], // Placeholder, user will likely change this
                 subject: subject,
                 text: body,

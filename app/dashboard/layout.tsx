@@ -22,7 +22,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white pb-24">
             {/* Mobile Header */}
             <header className="sticky top-0 z-50 flex items-center justify-between p-4 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-900">
-                <h1 className="font-bold text-lg tracking-tight">CoachTrack</h1>
+                <h1 className="font-bold text-lg tracking-tight">CoachEnControl</h1>
                 <div className="flex items-center gap-2">
                     <ThemeToggle />
                     <button onClick={() => signOut()} className="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-white transition-colors">

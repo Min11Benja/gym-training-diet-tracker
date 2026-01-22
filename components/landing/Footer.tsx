@@ -41,7 +41,7 @@ export default function Footer() {
                         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600/20 text-emerald-600 dark:text-[#B2FF59]">
                             <LayoutDashboard size={18} />
                         </div>
-                        <span>CoachTrack</span>
+                        <span>CoachEnControl</span>
                     </div>
 
                     <div className="flex items-center gap-8 text-sm text-gray-500 dark:text-gray-500">
