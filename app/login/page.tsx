@@ -25,9 +25,9 @@ export default function LoginPage() {
 
         // Mock Auth Logic
         setTimeout(() => {
-            if (email === "admin@coachtrack.com" && password === "admin123") {
-                router.push("/dashboard");
-            } else if (email === "client@coachtrack.com" && password === "client123") {
+            if (email === "coach@coachencontrol.com" && password === "admin123") {
+                router.push("/coach/dashboard");
+            } else if (email === "client@coachencontrol.com" && password === "client123") {
                 router.push("/dashboard");
             } else {
                 setError("Invalid credentials. Please try again.");
@@ -36,12 +36,12 @@ export default function LoginPage() {
         }, 1000);
     };
 
-    const fillDemo = (role: "admin" | "client") => {
-        if (role === "admin") {
-            setEmail("admin@coachtrack.com");
+    const fillDemo = (role: "coach" | "client") => {
+        if (role === "coach") {
+            setEmail("coach@coachencontrol.com");
             setPassword("admin123");
         } else {
-            setEmail("client@coachtrack.com");
+            setEmail("client@coachencontrol.com");
             setPassword("client123");
         }
     };
@@ -157,20 +157,20 @@ export default function LoginPage() {
                     <div className="grid grid-cols-2 gap-4">
                         <button
                             onClick={() => {
-                                setEmail("admin@coachtrack.com");
+                                setEmail("coach@coachencontrol.com");
                                 setPassword("admin123");
                                 // Trigger immediate login
                                 setIsLoading(true);
-                                setTimeout(() => router.push("/dashboard"), 800);
+                                setTimeout(() => router.push("/coach/dashboard"), 800);
                             }}
                             className="flex items-center justify-center gap-2 p-3 bg-emerald-50 dark:bg-[#B2FF59]/10 border border-emerald-200 dark:border-[#B2FF59]/20 rounded-xl text-emerald-700 dark:text-[#B2FF59] hover:bg-emerald-100 dark:hover:bg-[#B2FF59]/20 transition-colors font-medium text-sm"
                         >
                             <Shield size={16} />
-                            Login as Admin
+                            Login as Coach
                         </button>
                         <button
                             onClick={() => {
-                                setEmail("client@coachtrack.com");
+                                setEmail("client@coachencontrol.com");
                                 setPassword("client123");
                                 // Trigger immediate login
                                 setIsLoading(true);
