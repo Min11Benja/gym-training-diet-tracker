@@ -16,18 +16,18 @@ export default function CoachDashboardPage() {
 
             {/* KPI Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="bg-zinc-900 p-5 rounded-2xl border border-zinc-800">
+                <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm dark:shadow-none">
                     <div className="flex justify-between items-start mb-4">
-                        <div className="p-2 bg-blue-500/10 text-blue-500 rounded-lg">
+                        <div className="p-2 bg-blue-500/10 text-blue-500 dark:text-blue-400 rounded-lg">
                             <Users size={20} />
                         </div>
                     </div>
-                    <p className="text-3xl font-bold text-white">{clients?.length || 0}</p>
-                    <p className="text-xs text-zinc-500 font-medium uppercase tracking-wider mt-1">Total Clients</p>
+                    <p className="text-3xl font-bold text-zinc-900 dark:text-white">{clients?.length || 0}</p>
+                    <p className="text-xs text-zinc-600 dark:text-zinc-500 font-medium uppercase tracking-wider mt-1">Total Clients</p>
                 </div>
-                <div className="bg-zinc-900 p-5 rounded-2xl border border-zinc-800">
+                <div className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm dark:shadow-none">
                     <div className="flex justify-between items-start mb-4">
-                        <div className="p-2 bg-green-500/10 text-green-500 rounded-lg">
+                        <div className="p-2 bg-green-500/10 text-green-500 dark:text-green-400 rounded-lg">
                             <CheckCircle2 size={20} />
                         </div>
                     </div>
