@@ -57,33 +57,33 @@ export default function CoachDashboardPage() {
             {/* Alerts Panel */}
             <div className="grid gap-6 md:grid-cols-2">
                 {/* Pending AI Drafts - NEW */}
-                <div className="bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden">
-                    <div className="p-5 border-b border-zinc-800 flex justify-between items-center">
-                        <h3 className="font-bold flex items-center gap-2">
+                <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm dark:shadow-none">
+                    <div className="p-5 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
+                        <h3 className="font-bold flex items-center gap-2 text-zinc-900 dark:text-white">
                             <AlertCircle size={18} className="text-orange-500" />
                             Pending AI Drafts
                         </h3>
                         <span className="text-xs bg-orange-500/10 text-orange-500 px-2 py-1 rounded-full">2</span>
                     </div>
-                    <div className="divide-y divide-zinc-800">
+                    <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
                         {[
                             { name: "Sarah J.", trigger: "Off-plan meal", time: "15m ago" },
                             { name: "Mike T.", trigger: "Missed workout", time: "1h ago" },
                         ].map((draft, i) => (
-                            <div key={i} className="p-4 flex items-center gap-4 hover:bg-zinc-800/50 transition-colors cursor-pointer">
+                            <div key={i} className="p-4 flex items-center gap-4 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer">
                                 <div className="h-2 w-2 rounded-full bg-orange-500"></div>
                                 <div className="flex-1">
-                                    <p className="font-semibold text-sm">{draft.name}</p>
-                                    <p className="text-xs text-zinc-500">{draft.trigger}</p>
+                                    <p className="font-semibold text-sm text-zinc-900 dark:text-white">{draft.name}</p>
+                                    <p className="text-xs text-zinc-600 dark:text-zinc-500">{draft.trigger}</p>
                                 </div>
-                                <span className="text-xs text-zinc-600">{draft.time}</span>
+                                <span className="text-xs text-zinc-500 dark:text-zinc-600">{draft.time}</span>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden">
-                    <div className="p-5 border-b border-zinc-800 flex justify-between items-center">
+                <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm dark:shadow-none">
+                    <div className="p-5 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
                         <h3 className="font-bold flex items-center gap-2 text-zinc-900 dark:text-white">
                             <TrendingUp size={18} className="text-blue-500" />
                             Recent Wins

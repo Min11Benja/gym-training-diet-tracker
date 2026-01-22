@@ -72,11 +72,36 @@ export default function CoachLayout({ children }: { children: React.ReactNode })
                 </div>
             </div>
 
-            <main className="flex-1 p-6 md:p-10 overflow-auto pt-20 md:pt-10">
+            <main className="flex-1 p-6 md:p-10 overflow-auto pt-20 md:pt-10 pb-24 md:pb-10">
                 <div className="max-w-5xl mx-auto">
                     {children}
                 </div>
             </main>
+
+            {/* Mobile Bottom Navigation */}
+            <nav className="md:hidden fixed bottom-0 w-full bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 px-4 py-3 z-50">
+                <div className="flex justify-around items-center">
+                    {navItems.map((item) => {
+                        const isActive = pathname === item.href;
+                        const Icon = item.icon;
+                        return (
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                className="flex flex-col items-center gap-1 min-w-[80px]"
+                            >
+                                <Icon
+                                    size={24}
+                                    className={isActive ? "text-emerald-600 dark:text-[#B2FF59]" : "text-zinc-500 dark:text-zinc-400"}
+                                />
+                                <span className={`text-xs font-medium ${isActive ? "text-emerald-600 dark:text-[#B2FF59]" : "text-zinc-500 dark:text-zinc-400"}`}>
+                                    {item.name}
+                                </span>
+                            </Link>
+                        );
+                    })}
+                </div>
+            </nav>
         </div>
     );
 }
