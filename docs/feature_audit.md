@@ -265,8 +265,8 @@ To: "You're building consistency. 6/7 days tracked = winning."
 
 **3. WhatsApp Integration**
 - **Risk:** Complexity + rate limits
-- **Solution:** Use Twilio API, queue messages in Convex
-- **Tech:** Create `messageQueue` table, worker function to process
+- **Solution:** Use existing WhatsApp Business API implementation, queue messages in Convex
+- **Tech:** Create `messageQueue` table, worker function to process, reuse WhatsApp API templates from other projects
 
 ### Database Schema Updates Needed
 
@@ -367,7 +367,8 @@ NEW: "Save 1 client = 4 months paid for"
    - Add "ROI calculator" 
 
 5. **WhatsApp Prototype** (5-7 days)
-   - Twilio integration
+   - Integrate existing WhatsApp Business API
+   - Create message templates for approval
    - Message queue system
    - Test with 3-5 beta coaches
 

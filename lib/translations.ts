@@ -99,14 +99,14 @@ export const content = {
             subheading: "Every feature is designed to keep clients compliant and paying longer.",
             items: [
                 {
-                    title: "Nutrition Damage Control",
+                    title: "Off-Plan Meal → Instant Salvage Plan (Not Shame)",
                     subtitle: "Retention Engine #1",
-                    description: "Client eats out? No problem. AI estimates calories from photos, automatically adjusts the rest of the week, and suggests trade-offs.",
+                    description: "Client eats out? The system calculates exactly how to adjust the rest of the week to stay on track. No guilt, no 'starting Monday' — just intelligent course correction.",
                     result: "Clients stop quitting after one mistake.",
                     points: [
-                        "Photo-based macro estimation",
-                        "Auto-adjustment for weekly balance",
-                        "Removes guilt, restores control",
+                        "Real-time weekly recalculation",
+                        "Specific trade-off suggestions",
+                        "Removes shame, restores momentum",
                     ],
                 },
                 {
@@ -156,7 +156,7 @@ export const content = {
         },
         pricing: {
             heading: "Simple Pricing. Massive Retention Upside.",
-            subheading: "If this saves you ONE client per month, it pays for itself.",
+            subheading: "Lose 1 less client per month = 4 months of this paid for. Do the retention math.",
             cards: {
                 starter: {
                     title: "Starter",
@@ -268,8 +268,8 @@ export const content = {
             title: {
                 line1: "Tus Clientes",
                 highlight1: "No Fallan en el Plan.",
-                line2: "Fallan en la",
-                highlight2: "Consistencia.",
+                line2: "Fallan en",
+                highlight2: "El Día Malo.",
             },
             subtitle: {
                 text: "Y cada comida perdida, mal entrenamiento o 'día trampa' te cuesta retención.",
@@ -347,14 +347,14 @@ export const content = {
             subheading: "Cada función está diseñada para mantener a los clientes cumpliendo y pagando por más tiempo.",
             items: [
                 {
-                    title: "Control de Daños Nutricional",
+                    title: "Comida Fuera de Plan → Plan de Rescate Instantáneo (No Culpa)",
                     subtitle: "Motor de Retención #1",
-                    description: "¿El cliente comió fuera? No hay problema. La IA estima calorías con fotos, ajusta el resto de la semana y sugiere compensaciones.",
+                    description: "¿El cliente salió a comer? El sistema calcula exactamente cómo ajustar el resto de la semana para seguir en camino. Sin culpa, sin 'empiezo el lunes' — solo corrección inteligente.",
                     result: "Los clientes dejan de renunciar tras un error.",
                     points: [
-                        "Estimación de macros con fotos",
-                        "Auto-ajuste para balance semanal",
-                        "Elimina la culpa, restaura el control",
+                        "Recálculo semanal en tiempo real",
+                        "Sugerencias específicas de compensación",
+                        "Elimina la vergüenza, restaura el impulso",
                     ],
                 },
                 {
@@ -404,7 +404,7 @@ export const content = {
         },
         pricing: {
             heading: "Precios Simples. Retención Masiva.",
-            subheading: "Si esto te salva UN cliente al mes, se paga solo.",
+            subheading: "Pierde 1 cliente menos al mes = 4 meses de esto pagado. Haz las matemáticas de retención.",
             cards: {
                 starter: {
                     title: "Starter",
