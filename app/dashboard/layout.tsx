@@ -1,14 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { Home, Dumbbell, UtensilsCrossed, ChartLine, Image as ImageIcon, LogOut } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
+    const router = useRouter();
     const { signOut } = useAuthActions();
+
+    const handleSignOut = async () => {
+        await signOut();
+        router.push("/login");
+    };
 
     const tabs = [
         { name: "Home", href: "/dashboard", icon: Home },
@@ -25,7 +31,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 <h1 className="font-bold text-lg tracking-tight">CoachEnControl</h1>
                 <div className="flex items-center gap-2">
                     <ThemeToggle />
-                    <button onClick={() => signOut()} className="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-white transition-colors">
+                    <button onClick={handleSignOut} className="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-white transition-colors">
                         <LogOut size={20} />
                     </button>
                 </div>
@@ -49,7 +55,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                         <Link
                             key={tab.name}
                             href={tab.href}
-                            className={`flex flex-col items-center gap-1 transition-colors ${isActive ? "text-blue-600 dark:text-blue-500" : "text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300"
+                            className={`flex flex-col items-center gap-1 transition-colors ${isActive ? "text-emerald-600 dark:text-[#B2FF59]" : "text-zinc-400 dark:text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300"
                                 }`}
                         >
                             <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
