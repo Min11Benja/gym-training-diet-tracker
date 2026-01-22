@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white min-h-screen`}>
+      <body className={`${inter.variable} font-sans antialiased bg-white dark:bg-[#101010] text-zinc-900 dark:text-white min-h-screen`}>
         <ThemeProvider>
           <LanguageProvider>
             <ConvexClientProvider>{children}</ConvexClientProvider>

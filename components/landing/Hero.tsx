@@ -40,7 +40,7 @@ export default function Hero() {
     const t = content[language].hero;
 
     return (
-        <section className="bg-[#101010] text-white min-h-[calc(100vh-80px)] pt-32 pb-12 px-4 md:px-8 font-sans overflow-hidden">
+        <section className="bg-white dark:bg-[#101010] text-zinc-600 dark:text-gray-400 min-h-[calc(100vh-80px)] pt-24 pb-12 px-4 md:px-8 font-sans overflow-hidden">
             <motion.div
                 className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8"
                 variants={containerVariants}
@@ -57,7 +57,7 @@ export default function Hero() {
                         className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden group"
                     >
                         {/* The "Cut Corner" Effect */}
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-[#101010] z-10 transform rotate-45 translate-x-12 -translate-y-12" />
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-white dark:bg-[#101010] z-10 transform rotate-45 translate-x-12 -translate-y-12" />
 
                         <img
                             src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=2670&auto=format&fit=crop"
@@ -69,23 +69,23 @@ export default function Hero() {
                     {/* CTA Card Replace 93% Stat */}
                     <motion.div
                         variants={itemVariants}
-                        className="bg-[#8f8f8f] text-white rounded-2xl p-8 flex flex-col justify-center gap-4 h-auto min-h-[220px] relative overflow-hidden"
+                        className="bg-white dark:bg-[#151515] border border-zinc-200 dark:border-white/10 text-zinc-600 dark:text-gray-400 rounded-2xl p-8 flex flex-col justify-center gap-4 h-auto min-h-[220px] relative overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
                     >
                         {/* Decorative Notch */}
-                        <div className="absolute left-[-20px] top-[50%] w-8 h-8 bg-[#101010] rotate-45 transform -translate-y-1/2" />
-                        <div className="absolute right-[-20px] top-[50%] w-8 h-8 bg-[#101010] rotate-45 transform -translate-y-1/2" />
+                        <div className="absolute left-[-20px] top-[50%] w-8 h-8 bg-white dark:bg-[#101010] rotate-45 transform -translate-y-1/2 border-r border-zinc-200 dark:border-white/10" />
+                        <div className="absolute right-[-20px] top-[50%] w-8 h-8 bg-white dark:bg-[#101010] rotate-45 transform -translate-y-1/2 border-l border-zinc-200 dark:border-white/10" />
 
                         <div>
-                            <h3 className="font-bold text-lg mb-3">{t.benefits.title}</h3>
+                            <h3 className="font-bold text-lg mb-3 text-zinc-900 dark:text-white tracking-tight">{t.benefits.title}</h3>
                             <ul className="space-y-2 mb-4">
                                 {t.benefits.list.map((item: string, i: number) => (
-                                    <li key={i} className="flex items-center gap-2 text-sm text-white/90">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[#B2FF59]" />
+                                    <li key={i} className="flex items-center gap-2 text-sm text-zinc-600 dark:text-gray-400/90">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-[#B2FF59]" />
                                         {item}
                                     </li>
                                 ))}
                             </ul>
-                            <p className="text-xs text-white/60 pt-3 border-t border-white/20">
+                            <p className="text-xs text-zinc-500 dark:text-gray-500 pt-3 border-t border-zinc-100 dark:border-white/10">
                                 {t.benefits.footer}
                             </p>
                         </div>
@@ -124,28 +124,28 @@ export default function Hero() {
                     </motion.div>
 
                     {/* Heading with "Masked Reveal" effect */}
-                    <div className="mt-8 lg:mt-24 mb-12 relative z-10">
+                    <div className="mt-8 lg:mt-16 mb-12 relative z-10">
                         <span className="text-gray-400 text-sm mb-4 block flex items-center gap-2">
                             {t.badge} <div className="h-[1px] w-8 bg-gray-600"></div>
                         </span>
 
                         <div className="overflow-hidden">
-                            <motion.h1 variants={revealTextVariants} className="text-6xl md:text-8xl font-bold uppercase leading-[0.9]">
+                            <motion.h1 variants={revealTextVariants} className="text-5xl md:text-8xl font-bold uppercase leading-[0.9] tracking-tight text-zinc-900 dark:text-white">
                                 {t.title.line1}
                             </motion.h1>
                         </div>
                         <div className="overflow-hidden">
-                            <motion.h1 variants={revealTextVariants} className="text-6xl md:text-8xl font-bold uppercase leading-[0.9] text-gray-500">
+                            <motion.h1 variants={revealTextVariants} className="text-5xl md:text-8xl font-bold uppercase leading-[0.9] tracking-tight text-gray-500">
                                 {t.title.highlight1}
                             </motion.h1>
                         </div>
                         <div className="overflow-hidden">
-                            <motion.h1 variants={revealTextVariants} className="text-6xl md:text-8xl font-bold uppercase leading-[0.9]">
+                            <motion.h1 variants={revealTextVariants} className="text-5xl md:text-8xl font-bold uppercase leading-[0.9] tracking-tight text-zinc-900 dark:text-white">
                                 {t.title.line2}
                             </motion.h1>
                         </div>
                         <div className="overflow-hidden">
-                            <motion.h1 variants={revealTextVariants} className="text-6xl md:text-8xl font-bold uppercase leading-[0.9] text-[#B2FF59]">
+                            <motion.h1 variants={revealTextVariants} className="text-5xl md:text-8xl font-bold uppercase leading-[0.9] tracking-tight text-emerald-600 dark:text-[#B2FF59]">
                                 {t.title.highlight2}
                             </motion.h1>
                         </div>
@@ -155,29 +155,29 @@ export default function Hero() {
                     <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mt-auto pb-8">
 
                         {/* Buttons */}
-                        <div className="flex flex-col gap-4">
-                            <Link href="#cta" className="group">
-                                <div className="bg-white text-black hover:bg-[#B2FF59] hover:text-black font-bold p-4 rounded-xl flex items-center gap-4 transition-all duration-300 shadow-lg shadow-white/5 group-hover:shadow-[#B2FF59]/20 group-hover:-translate-y-1">
-                                    <div className="w-10 h-10 bg-black text-white rounded-lg flex items-center justify-center group-hover:bg-black/80">
+                        <div className="flex flex-col w-full gap-4">
+                            <Link href="#cta" className="group w-full">
+                                <div className="bg-zinc-900 dark:bg-white text-white dark:text-black hover:bg-emerald-600 dark:hover:bg-[#B2FF59] hover:text-white dark:hover:text-black font-bold p-4 rounded-xl flex items-center gap-4 transition-all duration-300 shadow-lg shadow-zinc-900/5 dark:shadow-white/5 group-hover:shadow-emerald-500/20 dark:group-hover:shadow-[#B2FF59]/20 group-hover:-translate-y-1 w-full">
+                                    <div className="w-10 h-10 bg-white dark:bg-black text-black dark:text-white rounded-lg flex items-center justify-center group-hover:bg-white/90 dark:group-hover:bg-black/80 shrink-0">
                                         <ArrowUpRight size={20} />
                                     </div>
                                     <span className="text-lg">👉 {t.cta.primary}</span>
                                 </div>
                             </Link>
 
-                            <Link href="#solution" className="group">
-                                <div className="border border-white/20 text-white hover:bg-white/5 font-medium p-4 rounded-xl flex items-center gap-4 transition-all duration-300 group-hover:-translate-y-1">
-                                    <div className="w-10 h-10 border border-white/20 rounded-lg flex items-center justify-center">
+                            <Link href="#solution" className="group w-full">
+                                <div className="border border-zinc-200 dark:border-white/20 text-zinc-600 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/5 font-medium p-4 rounded-xl flex items-center gap-4 transition-all duration-300 group-hover:-translate-y-1 w-full">
+                                    <div className="w-10 h-10 border border-zinc-200 dark:border-white/20 rounded-lg flex items-center justify-center shrink-0">
                                         <Asterisk size={20} />
                                     </div>
-                                    <span className="text-sm text-gray-300 group-hover:text-white">📈 {t.cta.secondary}</span>
+                                    <span className="text-sm text-zinc-600 dark:text-gray-300 group-hover:text-zinc-900 dark:group-hover:text-white">📈 {t.cta.secondary}</span>
                                 </div>
                             </Link>
                         </div>
 
                         {/* Bottom Right Testimonial/Info */}
-                        <div className="flex items-center gap-4 border-t border-white/10 pt-6">
-                            <div className="bg-white/10 p-2 rounded-lg text-white">
+                        <div className="flex items-center gap-4 border-t border-zinc-200 dark:border-white/10 pt-6">
+                            <div className="bg-zinc-100 dark:bg-white/10 p-2 rounded-lg text-zinc-600 dark:text-gray-400">
                                 <ArrowRight className="rotate-45" />
                             </div>
                             <p className="text-sm text-gray-400 max-w-[200px]">

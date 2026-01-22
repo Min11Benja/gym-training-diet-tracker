@@ -408,14 +408,14 @@ export const content = {
             cards: {
                 starter: {
                     title: "Starter",
-                    price: "$29",
+                    price: "$500 MXN",
                     description: "Para coaches que toman la retención en serio",
                     features: ["Hasta 20 clientes", "Rastreo esencial", "Feedback básico de IA"],
                     cta: "Prueba Gratis",
                 },
                 pro: {
                     title: "Pro",
-                    price: "$79",
+                    price: "$1500 MXN",
                     description: "Para escalar tu coaching online",
                     features: ["Hasta 50 clientes", "Insights avanzados", "Soporte prioritario", "Integración WhatsApp"],
                     badge: "Más Popular",
