@@ -11,55 +11,68 @@
 ### Beta Phase (10-50 Coaches)
 | Service | Monthly Cost | Notes |
 |---------|--------------|-------|
-| **Vercel Hosting** | $0 - $20 | Free tier covers beta |
+| **Google Cloud Run** | $0 - $25 | Free tier covers beta |
 | **Convex Backend** | $0 - $25 | Free tier → Starter |
 | **Gemini AI** | $0 - $75 | Free tier → paid |
 | **WhatsApp Business API** | $50 - $200 | Conversation-based pricing |
-| **Domain (.com)** | $1 - $2 | ~$12-24/year |
-| **Total Beta** | **$51 - $322/month** | **Avg: ~$150/month** |
+| **Cloudflare Domain** | $0.75 | ~$9/year (at-cost) |
+| **Total Beta** | **$51 - $326/month** | **Avg: ~$145/month** |
 
 ### Scale Phase (500 Coaches)
 | Service | Monthly Cost |
 |---------|--------------|
-| **Vercel Pro** | $20 |
+| **Google Cloud Run** | $50 - $100 |
 | **Convex Starter** | $25 |
 | **Gemini AI** | $500 - $1,500 |
 | **WhatsApp API** | $2,000 - $5,000 |
-| **Domain** | $2 |
-| **Total Scale** | **$2,547 - $6,547/month** |
+| **Cloudflare Domain** | $0.75 |
+| **Total Scale** | **$2,576 - $6,626/month** |
 
 ---
 
 ## 📊 Detailed Cost Breakdown
 
-### 1. Hosting - Vercel (Recommended)
+### 1. Hosting - Google Cloud Run
 
-**Why Vercel:**
-- ✅ Next.js optimized (our stack)
-- ✅ Auto-scaling
-- ✅ Edge functions for AI calls
-- ✅ Free SSL, CDN included
+**Why Google Cloud Run:**
+- ✅ Serverless, auto-scaling
+- ✅ Pay only for what you use
+- ✅ Free tier covers beta testing
+- ✅ Native integration with Gemini AI
+- ✅ Better cost at scale vs Vercel
+- ✅ Full control over infrastructure
 
 **Pricing:**
-- **Hobby (Free):** Perfect for beta
-  - 100 GB bandwidth/month
-  - 1 concurrent build
-  - Unlimited sites
-  - **Limits:** 10 projects max, 1 member
+- **Free Tier (Always Free):**
+  - 2 million requests/month
+  - 360,000 vCPU-seconds/month
+  - 180,000 GiB-seconds/month
+  - **Good for:** 20-40 coaches in beta
   
-- **Pro ($20/month):**
-  - 1 TB bandwidth
-  - 12 concurrent builds
-  - Team collaboration
-  - **When to upgrade:** 50+ coaches
+- **Paid Usage:**
+  - **Requests:** $0.40 per million
+  - **CPU:** $0.00002400 per vCPU-second
+  - **Memory:** $0.00000250 per GiB-second
+  - **Minimum instances (optional):** $0.60/instance/day
 
-**Alternative: Google Cloud Run**
-- **Cost:** $0.40/M requests + $0.00002400/vCPU-second
-- **Estimate:** $15-30/month for beta
-- **Pros:** More control, cheaper at scale
-- **Cons:** More complex setup
+**Beta Estimate (10-50 coaches):**
+- 500K requests/month → **Free**
+- CPU/Memory → **Free** (within tier)
+- **Total:** $0-25/month
 
-**Beta Strategy:** Start on Vercel Hobby (free), upgrade to Pro at 40+ coaches.
+**Scale Estimate (500 coaches):**
+- 5M requests/month → $1.20
+- CPU usage → $30-50
+- Memory → $15-20
+- Optional: 1 min instance for speed → $18
+- **Total:** $50-100/month
+
+**Additional Services:**
+- **Cloud Storage:** $0.026/GB/month (~$2-5/month for images)
+- **Cloud CDN:** $0.08/GB (~$5-10/month)
+- **Load Balancer:** $18/month (optional, only at scale)
+
+**Beta Strategy:** Use free tier + Cloud CDN, avoid min instances until 100+ coaches.
 
 ---
 
@@ -171,19 +184,44 @@ const AI_LIMITS = {
 
 ---
 
-### 5. Domain Registration
+### 5. Domain & DNS - Cloudflare
 
-**Registrar:** Namecheap / Google Domains / Cloudflare
+**Why Cloudflare:**
+- ✅ **At-cost domain pricing** (no markup)
+- ✅ **Free SSL certificates** (automatic)
+- ✅ **Free DDoS protection** (enterprise-grade)
+- ✅ **Free CDN** (global edge network)
+- ✅ **Free DNS** (fastest in industry)
+- ✅ **Analytics included**
 
 **Pricing:**
-- **.com:** $12-15/year (~$1.25/month)
-- **.ai:** $80-100/year (~$8/month) - not recommended
-- **DNS:** Free (included)
-- **Email:** $0-6/month (Google Workspace basic)
+- **.com registration:** ~$9.15/year (~$0.76/month)
+- **.app:** ~$15/year (~$1.25/month)
+- **DNS:** Free (unlimited)
+- **SSL:** Free (auto-renewing)
+- **DDoS Protection:** Free (unlimited)
+- **CDN:** Free (unlimited bandwidth)
+- **Email Routing:** Free (forward to Gmail)
 
-**Recommendation:** `coachencontrol.com` - $12/year
+**Cloudflare Plans:**
+- **Free:** Perfect for beta
+  - Unlimited DDoS protection
+  - Global CDN
+  - SSL/TLS encryption
+  - Basic WAF rules
+  
+- **Pro ($20/month):** Only if needed at scale
+  - Advanced DDoS
+  - Image optimization
+  - 20+ page rules
 
-**Beta Strategy:** Register domain immediately for branding.
+**Recommendation:** `coachencontrol.com` via Cloudflare - $9.15/year
+
+**Beta Strategy:** 
+- Register domain on Cloudflare immediately
+- Use free tier (covers all beta needs)
+- Enable DDoS protection from day 1
+- Set up email routing to personal Gmail
 
 ---
 
