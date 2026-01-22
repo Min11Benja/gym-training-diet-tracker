@@ -63,4 +63,49 @@ export default defineSchema({
         photos: v.array(v.string()), // storage IDs or URLs
         notes: v.optional(v.string()),
     }).index("by_user_date", ["userId", "date"]),
+
+    // AI Message System - for coach approval workflow
+    aiMessages: defineTable({
+        clientId: v.id("users"),
+        coachId: v.id("users"),
+        trigger: v.string(), // "off_plan_meal", "missed_workout", "week_salvage", etc.
+        draftMessage: v.string(),
+        status: v.union(v.literal("draft"), v.literal("approved"), v.literal("sent"), v.literal("rejected")),
+        sentAt: v.optional(v.number()), // timestamp
+        createdAt: v.number(), // timestamp for sorting
+    })
+        .index("by_coach_status", ["coachId", "status"])
+        .index("by_client", ["clientId"])
+        .index("by_created", ["createdAt"]),
+
+    // Coach Settings - AI tone customization
+    coachSettings: defineTable({
+        coachId: v.id("users"),
+        aiTone: v.optional(v.union(v.literal("firm"), v.literal("supportive"), v.literal("casual"))),
+        autoApprove: v.optional(v.boolean()), // default false
+        customTemplates: v.optional(v.string()), // JSON string of custom response templates
+    }).index("by_coach", ["coachId"]),
+
+    // Client Activity Tracking - for risk score calculation
+    clientActivity: defineTable({
+        clientId: v.id("users"),
+        weekOf: v.string(), // ISO week (YYYY-Www)
+        mealsLogged: v.number(),
+        workoutsCompleted: v.number(),
+        checkInsCount: v.number(), // total interactions with app
+        riskScore: v.number(), // 0-100 (0=engaged, 100=at risk)
+    })
+        .index("by_client_week", ["clientId", "weekOf"])
+        .index("by_risk", ["riskScore"]),
+
+    // Retention Metrics - coach-facing analytics
+    retentionMetrics: defineTable({
+        coachId: v.id("users"),
+        weekOf: v.string(), // ISO week
+        clientsActive: v.number(),
+        clientsAtRisk: v.number(),
+        dropouts: v.number(),
+        avgLTV: v.optional(v.number()), // average client lifetime value in months
+    })
+        .index("by_coach_week", ["coachId", "weekOf"]),
 });
