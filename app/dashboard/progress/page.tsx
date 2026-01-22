@@ -39,7 +39,7 @@ export default function ProgressPage() {
             await saveProgress({
                 storageId,
                 date,
-                notes: "Uploaded via CoachTrack"
+                notes: "Uploaded via CoachEnControl"
             });
 
             setSelectedImage(null);

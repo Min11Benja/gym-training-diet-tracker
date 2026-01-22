@@ -74,12 +74,12 @@ export default function SmartForm() {
 
     if (isSuccess) {
         return (
-            <div className="bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-12 text-center max-w-2xl mx-auto animate-in fade-in zoom-in duration-500">
+            <div className="bg-zinc-50 dark:bg-white/5 dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 dark:border-zinc-800 rounded-2xl p-12 text-center max-w-2xl mx-auto animate-in fade-in zoom-in duration-500">
                 <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-6">
                     <CheckCircle2 className="h-8 w-8 text-emerald-500" />
                 </div>
-                <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">{t.success.title}</h3>
-                <p className="text-zinc-600 dark:text-zinc-400">
+                <h3 className="text-2xl font-bold text-zinc-600 dark:text-gray-400  mb-2">{t.success.title}</h3>
+                <p className="text-gray-400 dark:text-zinc-400">
                     {t.success.message}
                 </p>
             </div>
@@ -87,16 +87,16 @@ export default function SmartForm() {
     }
 
     return (
-        <section id="apply" className="py-24 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-900">
+        <section id="apply" className="py-24 bg-white dark:bg-[#101010]  border-t border-zinc-200 dark:border-white/10 dark:border-zinc-900">
             <div className="container px-6 mx-auto max-w-2xl">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl font-bold text-zinc-900 dark:text-white mb-4">{t.heading}</h2>
-                    <p className="text-zinc-600 dark:text-zinc-400">
+                    <h2 className="text-3xl font-bold text-zinc-600 dark:text-gray-400  mb-4">{t.heading}</h2>
+                    <p className="text-gray-400 dark:text-zinc-400">
                         {t.subheading}
                     </p>
                 </div>
 
-                <div className="bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-8 md:p-10 relative">
+                <div className="bg-zinc-50 dark:bg-white/5 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/10 dark:border-zinc-800 rounded-2xl p-8 md:p-10 relative">
                     {/* Progress Bar */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-zinc-200 dark:bg-zinc-800 rounded-t-2xl overflow-hidden">
                         <div
@@ -110,7 +110,7 @@ export default function SmartForm() {
                         {/* STEP 1: CONTEXT */}
                         {step === 1 && (
                             <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
-                                <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-6">{t.progress.context}</h3>
+                                <h3 className="text-xl font-semibold text-zinc-600 dark:text-gray-400  mb-6">{t.progress.context}</h3>
 
                                 <div className="grid gap-4">
                                     <div className="space-y-2">
@@ -153,7 +153,7 @@ export default function SmartForm() {
                                 </div>
 
                                 <div className="pt-4 flex justify-end">
-                                    <Button onClick={handleNext} disabled={!canNext} className="bg-indigo-600 hover:bg-indigo-500 text-white">
+                                    <Button onClick={handleNext} disabled={!canNext} className="bg-indigo-600 hover:bg-indigo-500 text-zinc-600 dark:text-gray-400">
                                         {t.steps[1].next}
                                     </Button>
                                 </div>
@@ -163,7 +163,7 @@ export default function SmartForm() {
                         {/* STEP 2: QUALIFICATION */}
                         {step === 2 && (
                             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                                <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-6">{t.progress.qualification}</h3>
+                                <h3 className="text-xl font-semibold text-zinc-600 dark:text-gray-400  mb-6">{t.progress.qualification}</h3>
 
                                 <div>
                                     <Label className="block mb-2">{t.steps[2].clients}</Label>
@@ -172,7 +172,7 @@ export default function SmartForm() {
                                             <button
                                                 key={opt}
                                                 onClick={() => setFormData(prev => ({ ...prev, clients: opt as SmartFormData['clients'] }))}
-                                                className={`p-3 rounded-lg border text-sm font-medium transition-all ${formData.clients === opt ? "bg-indigo-600 border-indigo-500 text-white" : "bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
+                                                className={`p-3 rounded-lg border text-sm font-medium transition-all ${formData.clients === opt ? "bg-indigo-600 border-indigo-500 text-zinc-600 dark:text-gray-400" : "bg-white dark:bg-[#101010]  border-zinc-200 dark:border-white/10 dark:border-zinc-800 text-gray-400 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
                                             >
                                                 {opt}
                                             </button>
@@ -187,7 +187,7 @@ export default function SmartForm() {
                                             <button
                                                 key={opt}
                                                 onClick={() => setFormData(prev => ({ ...prev, price: opt as SmartFormData['price'] }))}
-                                                className={`p-3 rounded-lg border text-sm font-medium transition-all ${formData.price === opt ? "bg-indigo-600 border-indigo-500 text-white" : "bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
+                                                className={`p-3 rounded-lg border text-sm font-medium transition-all ${formData.price === opt ? "bg-indigo-600 border-indigo-500 text-zinc-600 dark:text-gray-400" : "bg-white dark:bg-[#101010]  border-zinc-200 dark:border-white/10 dark:border-zinc-800 text-gray-400 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
                                             >
                                                 {opt}
                                             </button>
@@ -202,7 +202,7 @@ export default function SmartForm() {
                                             <button
                                                 key={opt}
                                                 onClick={() => setFormData(prev => ({ ...prev, problem: opt as SmartFormData['problem'] }))}
-                                                className={`p-3 rounded-lg border text-sm font-medium text-left transition-all ${formData.problem === opt ? "bg-indigo-600 border-indigo-500 text-white" : "bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
+                                                className={`p-3 rounded-lg border text-sm font-medium text-left transition-all ${formData.problem === opt ? "bg-indigo-600 border-indigo-500 text-zinc-600 dark:text-gray-400" : "bg-white dark:bg-[#101010]  border-zinc-200 dark:border-white/10 dark:border-zinc-800 text-gray-400 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
                                             >
                                                 {opt}
                                             </button>
@@ -217,7 +217,7 @@ export default function SmartForm() {
                                             <button
                                                 key={opt}
                                                 onClick={() => setFormData(prev => ({ ...prev, trackingMethod: opt as SmartFormData['trackingMethod'] }))}
-                                                className={`p-3 rounded-lg border text-sm font-medium transition-all ${formData.trackingMethod === opt ? "bg-indigo-600 border-indigo-500 text-white" : "bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
+                                                className={`p-3 rounded-lg border text-sm font-medium transition-all ${formData.trackingMethod === opt ? "bg-indigo-600 border-indigo-500 text-zinc-600 dark:text-gray-400" : "bg-white dark:bg-[#101010]  border-zinc-200 dark:border-white/10 dark:border-zinc-800 text-gray-400 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
                                             >
                                                 {opt}
                                             </button>
@@ -226,10 +226,10 @@ export default function SmartForm() {
                                 </div>
 
                                 <div className="pt-4 flex justify-between">
-                                    <Button variant="ghost" onClick={() => setStep(1)} className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
+                                    <Button variant="ghost" onClick={() => setStep(1)} className="text-gray-500 hover:text-zinc-600 dark:text-gray-400 dark:hover:text-zinc-600 dark:text-gray-400">
                                         {t.steps[2].back}
                                     </Button>
-                                    <Button onClick={handleNext} className="bg-indigo-600 hover:bg-indigo-500 text-white">
+                                    <Button onClick={handleNext} className="bg-indigo-600 hover:bg-indigo-500 text-zinc-600 dark:text-gray-400">
                                         {t.steps[2].next}
                                     </Button>
                                 </div>
@@ -239,7 +239,7 @@ export default function SmartForm() {
                         {/* STEP 3: INTENTION */}
                         {step === 3 && (
                             <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
-                                <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-6">{t.progress.intention}</h3>
+                                <h3 className="text-xl font-semibold text-zinc-600 dark:text-gray-400  mb-6">{t.progress.intention}</h3>
 
                                 <div>
                                     <Label className="block mb-4 text-base text-zinc-700 dark:text-zinc-200">{t.steps[3].intention}</Label>
@@ -248,7 +248,7 @@ export default function SmartForm() {
                                             <button
                                                 key={opt}
                                                 onClick={() => setFormData(prev => ({ ...prev, intention: opt as SmartFormData['intention'] }))}
-                                                className={`p-4 rounded-xl border text-lg font-medium transition-all ${formData.intention === opt ? "bg-indigo-600 border-indigo-500 text-white" : "bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
+                                                className={`p-4 rounded-xl border text-lg font-medium transition-all ${formData.intention === opt ? "bg-indigo-600 border-indigo-500 text-zinc-600 dark:text-gray-400" : "bg-white dark:bg-[#101010]  border-zinc-200 dark:border-white/10 dark:border-zinc-800 text-gray-400 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700"}`}
                                             >
                                                 {opt}
                                             </button>
@@ -257,13 +257,13 @@ export default function SmartForm() {
                                 </div>
 
                                 <div className="pt-8 flex justify-between">
-                                    <Button variant="ghost" onClick={() => setStep(2)} className="text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
+                                    <Button variant="ghost" onClick={() => setStep(2)} className="text-gray-500 hover:text-zinc-600 dark:text-gray-400 dark:hover:text-zinc-600 dark:text-gray-400">
                                         {t.steps[3].back}
                                     </Button>
                                     <Button
                                         onClick={handleSubmit}
                                         disabled={isSubmitting}
-                                        className="bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:hover:bg-zinc-200 h-12 px-8 text-lg font-bold w-full md:w-auto"
+                                        className="bg-zinc-900 text-zinc-600 dark:text-gray-400 hover:bg-zinc-800 dark:bg-white dark:bg-[#101010] dark:text-zinc-950 dark:hover:bg-zinc-200 h-12 px-8 text-lg font-bold w-full md:w-auto"
                                     >
                                         {isSubmitting ? <Loader2 className="animate-spin" /> : t.steps[3].submit}
                                     </Button>

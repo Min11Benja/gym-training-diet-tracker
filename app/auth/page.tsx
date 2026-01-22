@@ -60,7 +60,7 @@ function AuthForm() {
 
             <div className="w-full max-w-md space-y-8">
                 <div className="text-center space-y-3">
-                    <h1 className="text-4xl font-bold tracking-tight">CoachTrack</h1>
+                    <h1 className="text-4xl font-bold tracking-tight">CoachEnControl</h1>
                     <p className="text-zinc-600 dark:text-zinc-400">
                         {step === "signIn"
                             ? "Welcome back! Sign in to continue."
@@ -139,7 +139,7 @@ function AuthForm() {
                 </div>
 
                 <p className="text-center text-xs text-zinc-500 dark:text-zinc-700">
-                    By continuing, you agree to CoachTrack&apos;s Terms of Service and Privacy Policy.
+                    By continuing, you agree to CoachEnControl&apos;s Terms of Service and Privacy Policy.
                 </p>
             </div>
         </div>

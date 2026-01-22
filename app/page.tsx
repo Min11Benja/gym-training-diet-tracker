@@ -11,7 +11,7 @@ import SmartForm from "@/components/landing/SmartForm";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-200 selection:bg-indigo-500/30">
+    <main className="min-h-screen bg-white dark:bg-[#101010] text-zinc-900 dark:text-white selection:bg-emerald-500/30 dark:selection:bg-[#B2FF59]/30">
       <Navbar />
       <Hero />
       <Problem />

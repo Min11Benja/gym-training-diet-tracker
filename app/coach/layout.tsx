@@ -22,7 +22,7 @@ export default function CoachLayout({ children }: { children: React.ReactNode })
                 <div className="mb-10 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">CT</div>
-                        <span className="font-bold text-xl tracking-tight">CoachTrack</span>
+                        <span className="font-bold text-xl tracking-tight">CoachEnControl</span>
                     </div>
                     <ThemeToggle />
                 </div>
@@ -57,7 +57,7 @@ export default function CoachLayout({ children }: { children: React.ReactNode })
 
             {/* Mobile Header (Coach) */}
             <div className="md:hidden fixed top-0 w-full bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-900 p-4 z-50 flex justify-between items-center">
-                <span className="font-bold">CoachTrack Pro</span>
+                <span className="font-bold">CoachEnControl Pro</span>
                 <div className="flex items-center gap-2">
                     <ThemeToggle />
                     <button onClick={() => signOut()} className="p-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-white transition-colors">

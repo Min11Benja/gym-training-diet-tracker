@@ -1,7 +1,7 @@
 export const content = {
     en: {
         navbar: {
-            brand: "CoachTrack",
+            brand: "CoachEnControl",
             links: {
                 howItWorks: "How It Works",
                 problem: "The Problem",
@@ -25,11 +25,21 @@ export const content = {
             },
             subtitle: {
                 text: "And every missed meal, bad workout, or “cheat day” costs you retention.",
-                strong: "CoachTrack rescues bad days before they turn into dropouts.",
+                strong: "CoachEnControl rescues bad days before they turn into dropouts.",
             },
             cta: {
                 primary: "Join the Coach Beta",
                 secondary: "See How It Improves Retention",
+            },
+            benefits: {
+                title: "Built for coaches who want:",
+                list: [
+                    "Higher client adherence",
+                    "Fewer ghosted check-ins",
+                    "Less emotional burnout",
+                    "More long-term clients",
+                ],
+                footer: "Without adding more WhatsApp messages to your day.",
             },
             socialProof: [
                 "Higher adherence",
@@ -68,7 +78,7 @@ export const content = {
         solution: {
             badge: "The Solution",
             heading: "What If Bad Days Didn’t Kill Progress?",
-            subheading: "CoachTrack turns mistakes into course corrections — automatically.",
+            subheading: "CoachEnControl turns mistakes into course corrections — automatically.",
             cards: {
                 card1: {
                     bad: { label: "Instead of:", quote: "“I messed up, what’s the point?”" },
@@ -89,14 +99,14 @@ export const content = {
             subheading: "Every feature is designed to keep clients compliant and paying longer.",
             items: [
                 {
-                    title: "Nutrition Damage Control",
+                    title: "Off-Plan Meal → Instant Salvage Plan (Not Shame)",
                     subtitle: "Retention Engine #1",
-                    description: "Client eats out? No problem. AI estimates calories from photos, automatically adjusts the rest of the week, and suggests trade-offs.",
+                    description: "Client eats out? The system calculates exactly how to adjust the rest of the week to stay on track. No guilt, no 'starting Monday' — just intelligent course correction.",
                     result: "Clients stop quitting after one mistake.",
                     points: [
-                        "Photo-based macro estimation",
-                        "Auto-adjustment for weekly balance",
-                        "Removes guilt, restores control",
+                        "Real-time weekly recalculation",
+                        "Specific trade-off suggestions",
+                        "Removes shame, restores momentum",
                     ],
                 },
                 {
@@ -146,7 +156,7 @@ export const content = {
         },
         pricing: {
             heading: "Simple Pricing. Massive Retention Upside.",
-            subheading: "If this saves you ONE client per month, it pays for itself.",
+            subheading: "Lose 1 less client per month = 4 months of this paid for. Do the retention math.",
             cards: {
                 starter: {
                     title: "Starter",
@@ -239,7 +249,7 @@ export const content = {
     },
     es: {
         navbar: {
-            brand: "CoachTrack",
+            brand: "CoachEnControl",
             links: {
                 howItWorks: "Cómo Funciona",
                 problem: "El Problema",
@@ -258,16 +268,26 @@ export const content = {
             title: {
                 line1: "Tus Clientes",
                 highlight1: "No Fallan en el Plan.",
-                line2: "Fallan en la",
-                highlight2: "Consistencia.",
+                line2: "Fallan en",
+                highlight2: "El Día Malo.",
             },
             subtitle: {
                 text: "Y cada comida perdida, mal entrenamiento o 'día trampa' te cuesta retención.",
-                strong: "CoachTrack rescata los días malos antes de que se conviertan en abandonos.",
+                strong: "CoachEnControl rescata los días malos antes de que se conviertan en abandonos.",
             },
             cta: {
                 primary: "Unirse a la Beta",
                 secondary: "Ver Cómo Mejora la Retención",
+            },
+            benefits: {
+                title: "Creado para coaches que buscan:",
+                list: [
+                    "Mayor adherencia",
+                    "Menos check-ins ignorados",
+                    "Menos desgaste emocional",
+                    "Más clientes a largo plazo",
+                ],
+                footer: "Sin añadir más mensajes de WhatsApp a tu día.",
             },
             socialProof: [
                 "Mayor adherencia",
@@ -306,7 +326,7 @@ export const content = {
         solution: {
             badge: "La Solución",
             heading: "¿Qué Pasaría si los Días Malos No Mataran el Progreso?",
-            subheading: "CoachTrack convierte los errores en correcciones de rumbo — automáticamente.",
+            subheading: "CoachEnControl convierte los errores en correcciones de rumbo — automáticamente.",
             cards: {
                 card1: {
                     bad: { label: "En lugar de:", quote: "“La cagué, ¿para qué seguir?”" },
@@ -327,14 +347,14 @@ export const content = {
             subheading: "Cada función está diseñada para mantener a los clientes cumpliendo y pagando por más tiempo.",
             items: [
                 {
-                    title: "Control de Daños Nutricional",
+                    title: "Comida Fuera de Plan → Plan de Rescate Instantáneo (No Culpa)",
                     subtitle: "Motor de Retención #1",
-                    description: "¿El cliente comió fuera? No hay problema. La IA estima calorías con fotos, ajusta el resto de la semana y sugiere compensaciones.",
+                    description: "¿El cliente salió a comer? El sistema calcula exactamente cómo ajustar el resto de la semana para seguir en camino. Sin culpa, sin 'empiezo el lunes' — solo corrección inteligente.",
                     result: "Los clientes dejan de renunciar tras un error.",
                     points: [
-                        "Estimación de macros con fotos",
-                        "Auto-ajuste para balance semanal",
-                        "Elimina la culpa, restaura el control",
+                        "Recálculo semanal en tiempo real",
+                        "Sugerencias específicas de compensación",
+                        "Elimina la vergüenza, restaura el impulso",
                     ],
                 },
                 {
@@ -384,18 +404,18 @@ export const content = {
         },
         pricing: {
             heading: "Precios Simples. Retención Masiva.",
-            subheading: "Si esto te salva UN cliente al mes, se paga solo.",
+            subheading: "Pierde 1 cliente menos al mes = 4 meses de esto pagado. Haz las matemáticas de retención.",
             cards: {
                 starter: {
                     title: "Starter",
-                    price: "$29",
+                    price: "$500 MXN",
                     description: "Para coaches que toman la retención en serio",
                     features: ["Hasta 20 clientes", "Rastreo esencial", "Feedback básico de IA"],
                     cta: "Prueba Gratis",
                 },
                 pro: {
                     title: "Pro",
-                    price: "$79",
+                    price: "$1500 MXN",
                     description: "Para escalar tu coaching online",
                     features: ["Hasta 50 clientes", "Insights avanzados", "Soporte prioritario", "Integración WhatsApp"],
                     badge: "Más Popular",
