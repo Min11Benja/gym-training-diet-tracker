@@ -1,14 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { useMutation } from "convex/react";
+import { useState, useEffect } from "react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
 import { User, Ruler, Target, ArrowRight } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function OnboardingPage() {
     const router = useRouter();
     const updateProfile = useMutation(api.users.updateProfile);
+    const currentUser = useQuery(api.users.currentUser);
 
     const [role, setRole] = useState<"coach" | "client">("client");
     const [name, setName] = useState("");
@@ -17,6 +19,30 @@ export default function OnboardingPage() {
     const [height, setHeight] = useState("");
     const [goal, setGoal] = useState("fat_loss");
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Redirect to auth if not authenticated
+    useEffect(() => {
+        if (currentUser === null) {
+            router.push("/auth");
+        }
+    }, [currentUser, router]);
+
+    // Show loading while checking auth
+    if (currentUser === undefined) {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                    <p className="mt-4 text-zinc-500">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Redirecting to auth
+    if (currentUser === null) {
+        return null;
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -45,14 +71,19 @@ export default function OnboardingPage() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-zinc-950 text-white p-4">
+        <div className="flex min-h-screen items-center justify-center bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white p-4">
+            {/* Theme Toggle */}
+            <div className="fixed top-6 right-6 z-50">
+                <ThemeToggle />
+            </div>
+
             <div className="w-full max-w-md space-y-8">
-                <div className="text-center">
-                    <h1 className="text-4xl font-bold tracking-tight mb-2">Welcome to CoachTrack</h1>
-                    <p className="text-zinc-400">Let&apos;s set up your profile</p>
+                <div className="text-center space-y-3">
+                    <h1 className="text-4xl font-bold tracking-tight">Welcome to CoachTrack</h1>
+                    <p className="text-zinc-600 dark:text-zinc-400">Let&apos;s set up your profile</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-900 p-8 rounded-3xl border border-zinc-800 shadow-xl">
+                <form onSubmit={handleSubmit} className="space-y-6 bg-zinc-50 dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 shadow-xl">
                     {/* Role Selection */}
                     <div>
                         <label className="block text-sm font-semibold text-zinc-400 mb-3 uppercase tracking-wider">I am a...</label>
