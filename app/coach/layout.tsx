@@ -25,12 +25,21 @@ export default function CoachLayout({ children }: { children: React.ReactNode })
         <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white flex transition-colors">
             {/* Desktop Sidebar */}
             <aside className="w-64 border-r border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-6 hidden md:flex flex-col">
-                <div className="mb-10 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
+                {/* Logo */}
+                <div className="mb-6">
+                    <div className="flex items-center gap-2 mb-4">
                         <div className="h-8 w-8 bg-emerald-600 dark:bg-[#B2FF59] rounded-lg flex items-center justify-center font-bold text-white dark:text-black">CE</div>
                         <span className="font-bold text-xl tracking-tight text-zinc-900 dark:text-white">CoachEnControl</span>
                     </div>
-                    <ThemeToggle />
+
+                    {/* Theme Toggle & Language */}
+                    <div className="flex gap-2">
+                        <ThemeToggle />
+                        <select className="flex-1 bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="es">🇲🇽 Español</option>
+                        </select>
+                    </div>
                 </div>
 
                 <nav className="space-y-2 flex-1">
