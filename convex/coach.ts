@@ -63,12 +63,26 @@ export const getClientDetails = query({
             .query("bodyMetrics")
             .withIndex("by_user_date", (q) => q.eq("userId", args.clientId))
             .order("desc")
-            .take(1);
+            .take(5);
+
+        const nutrition = await ctx.db
+            .query("foodLogs")
+            .withIndex("by_user_date", (q) => q.eq("userId", args.clientId))
+            .order("desc")
+            .take(7);
+
+        const progress = await ctx.db
+            .query("progress")
+            .withIndex("by_user_date", (q) => q.eq("userId", args.clientId))
+            .order("desc")
+            .take(6);
 
         return {
             client,
             workouts,
-            latestMetric: metrics[0],
+            metrics,
+            nutrition,
+            progress
         };
     },
 });

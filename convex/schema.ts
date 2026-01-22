@@ -7,6 +7,8 @@ export default defineSchema({
         email: v.string(),
         role: v.optional(v.union(v.literal("coach"), v.literal("client"))),
         coachId: v.optional(v.id("users")), // ID of the coach if user is a client
+        age: v.optional(v.number()),
+        sex: v.optional(v.string()),
         height: v.optional(v.number()), // in cm
         goal: v.optional(v.union(v.literal("fat_loss"), v.literal("muscle_gain"), v.literal("recomp"))),
         photoUrl: v.optional(v.string()),
@@ -15,13 +17,14 @@ export default defineSchema({
     workouts: defineTable({
         userId: v.id("users"),
         date: v.string(), // ISO date YYYY-MM-DD
+        status: v.optional(v.string()), // planned, completed
         exercises: v.array(
             v.object({
                 name: v.string(),
                 sets: v.number(),
                 reps: v.string(), // string to allow "10-12" or "AMRAP"
                 weight: v.number(),
-                effort: v.union(v.literal("easy"), v.literal("medium"), v.literal("hard")),
+                effort: v.optional(v.union(v.literal("easy"), v.literal("medium"), v.literal("hard"))),
                 notes: v.optional(v.string()),
             })
         ),

@@ -8,8 +8,8 @@ import {
 const isSignInPage = createRouteMatcher(["/auth"]);
 const isProtectedRoute = createRouteMatcher(["/dashboard(.*)", "/coach(.*)", "/onboarding"]);
 
-export default convexAuthNextjsMiddleware((request, { convexAuth }) => {
-    if (isSignInPage(request) && convexAuth.isAuthenticated()) {
+export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
+    if (isSignInPage(request) && (await convexAuth.isAuthenticated())) {
         return nextjsMiddlewareRedirect(request, "/onboarding"); // Redirect to onboarding to check role
     }
 
