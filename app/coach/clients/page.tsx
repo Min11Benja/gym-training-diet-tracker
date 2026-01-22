@@ -21,7 +21,10 @@ export default function ClientsPage() {
                         <Search className="absolute left-3 top-2.5 text-zinc-400 dark:text-zinc-500" size={18} />
                         <input placeholder="Search clients..." className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white rounded-xl pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59] w-64" />
                     </div>
-                    <button className="bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 shadow-lg">
+                    <button
+                        onClick={() => alert("Add Client feature coming soon!")}
+                        className="bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 shadow-lg"
+                    >
                         + Add Client
                     </button>
                 </div>
