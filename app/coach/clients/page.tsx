@@ -14,33 +14,33 @@ export default function ClientsPage() {
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center bg-zinc-950/80 backdrop-blur sticky top-0 z-10 py-4 border-b border-zinc-900">
-                <h2 className="text-3xl font-bold tracking-tight">Clients</h2>
+            <div className="flex justify-between items-center bg-white/80 dark:bg-zinc-950/80 backdrop-blur sticky top-0 z-10 py-4 border-b border-zinc-200 dark:border-zinc-900">
+                <h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">Clients</h2>
                 <div className="flex gap-4">
                     <div className="relative">
-                        <Search className="absolute left-3 top-2.5 text-zinc-500" size={18} />
-                        <input placeholder="Search clients..." className="bg-zinc-900 rounded-xl pl-10 pr-4 py-2 border border-zinc-800 focus:outline-none focus:border-blue-500 w-64" />
+                        <Search className="absolute left-3 top-2.5 text-zinc-400 dark:text-zinc-500" size={18} />
+                        <input placeholder="Search clients..." className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white rounded-xl pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59] w-64" />
                     </div>
-                    <button className="bg-blue-600 px-4 py-2 rounded-xl text-sm font-bold hover:bg-blue-500 shadow-lg shadow-blue-900/20">
+                    <button className="bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 shadow-lg">
                         + Add Client
                     </button>
                 </div>
             </div>
 
-            <div className="bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden">
+            <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm dark:shadow-none">
                 <table className="w-full text-left text-sm">
-                    <thead className="bg-zinc-950/50 border-b border-zinc-800">
+                    <thead className="bg-zinc-50 dark:bg-zinc-950/50 border-b border-zinc-200 dark:border-zinc-800">
                         <tr>
-                            <th className="p-4 font-medium text-zinc-400">Client</th>
-                            <th className="p-4 font-medium text-zinc-400">Status</th>
-                            <th className="p-4 font-medium text-zinc-400">Goal</th>
-                            <th className="p-4 font-medium text-zinc-400">Compliance</th>
-                            <th className="p-4 font-medium text-zinc-400 text-right">Actions</th>
+                            <th className="p-4 font-medium text-zinc-600 dark:text-zinc-400">Client</th>
+                            <th className="p-4 font-medium text-zinc-600 dark:text-zinc-400">Status</th>
+                            <th className="p-4 font-medium text-zinc-600 dark:text-zinc-400">Goal</th>
+                            <th className="p-4 font-medium text-zinc-600 dark:text-zinc-400">Compliance</th>
+                            <th className="p-4 font-medium text-zinc-600 dark:text-zinc-400 text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-zinc-800">
+                    <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
                         {displayClients?.map((client) => (
-                            <tr key={client._id} className="hover:bg-zinc-800/30 transition-colors group">
+                            <tr key={client._id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors group">
                                 <td className="p-4">
                                     <Link href={`/coach/clients/${client._id}`} className="flex items-center gap-3">
                                         <div className="h-10 w-10 rounded-full bg-blue-600/20 text-blue-500 flex items-center justify-center font-bold text-sm">
@@ -81,7 +81,7 @@ export default function ClientsPage() {
                     </tbody>
                 </table>
                 {displayClients?.length === 0 && (
-                    <div className="text-center py-12 text-zinc-500">
+                    <div className="text-center py-12 text-zinc-500 dark:text-zinc-400">
                         No clients found.
                     </div>
                 )}

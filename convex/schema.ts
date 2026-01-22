@@ -22,13 +22,20 @@ export default defineSchema({
             v.object({
                 name: v.string(),
                 sets: v.number(),
-                reps: v.string(), // string to allow "10-12" or "AMRAP"
-                weight: v.number(),
+                reps: v.union(
+                    v.string(), // e.g. "8-10" or "12"
+                    v.object({ left: v.number(), right: v.number() }) // bilateral: { left: 9, right: 8 }
+                ),
+                weight: v.optional(v.number()), // in kg, optional for bodyweight
                 effort: v.optional(v.union(v.literal("easy"), v.literal("medium"), v.literal("hard"))),
                 notes: v.optional(v.string()),
             })
         ),
         notes: v.optional(v.string()),
+        // Import-specific fields
+        isImported: v.optional(v.boolean()), // true if from import tool
+        rawText: v.optional(v.string()), // original pasted text
+        warmup: v.optional(v.array(v.string())), // warmup notes
     }).index("by_user_date", ["userId", "date"]),
 
     nutritionGoals: defineTable({

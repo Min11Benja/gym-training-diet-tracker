@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Plus, Save, History, Calendar, Trash2 } from "lucide-react";
+import { Plus, Save, History, Calendar, Trash2, Upload } from "lucide-react";
 
 export default function WorkoutLogPage() {
     const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
@@ -69,7 +69,10 @@ export default function WorkoutLogPage() {
         <div className="max-w-md mx-auto space-y-6 pb-32">
             <div className="flex justify-between items-center sticky top-0 z-10 bg-white/80 dark:bg-zinc-950/80 backdrop-blur pb-2 pt-2 border-b border-zinc-200 dark:border-zinc-900 -mx-4 px-4 mb-4">
                 <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Log Workout</h2>
-                <div className="flex gap-3">
+                <div className="flex gap-2">
+                    <Link href="/dashboard/workouts/import" className="p-2 bg-white dark:bg-zinc-900 rounded-full text-zinc-600 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-[#B2FF59] border border-zinc-200 dark:border-zinc-800" title="Import History">
+                        <Upload size={20} />
+                    </Link>
                     <Link href="/dashboard/workouts/history" className="p-2 bg-white dark:bg-zinc-900 rounded-full text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border border-zinc-200 dark:border-zinc-800">
                         <History size={20} />
                     </Link>
