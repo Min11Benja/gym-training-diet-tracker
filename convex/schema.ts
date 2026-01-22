@@ -36,7 +36,34 @@ export default defineSchema({
         isImported: v.optional(v.boolean()), // true if from import tool
         rawText: v.optional(v.string()), // original pasted text
         warmup: v.optional(v.array(v.string())), // warmup notes
+        // Coach assignment fields
+        assignedBy: v.optional(v.id("users")), // Coach who assigned this
+        planId: v.optional(v.id("workoutPlans")), // If part of a plan
+        completedAt: v.optional(v.number()), // Timestamp when marked complete
     }).index("by_user_date", ["userId", "date"]),
+
+    // Workout Plans (assigned by coach to client)
+    workoutPlans: defineTable({
+        coachId: v.id("users"),
+        clientId: v.id("users"),
+        name: v.string(),
+        description: v.optional(v.string()),
+        startDate: v.string(), // YYYY-MM-DD
+        endDate: v.optional(v.string()), // YYYY-MM-DD
+        status: v.union(v.literal("active"), v.literal("completed"), v.literal("paused")),
+        // Weekly workout template
+        weeklyPlan: v.array(
+            v.object({
+                dayOfWeek: v.number(), // 0 = Monday, 6 = Sunday
+                dayName: v.string(), // "Monday", "Tuesday", etc.
+                exercises: v.array(
+                    v.object({ name: v.string(), sets: v.number(), reps: v.string(), weight: v.optional(v.number()), notes: v.optional(v.string()) })
+                ),
+            })
+        ),
+    })
+        .index("by_client", ["clientId"])
+        .index("by_coach", ["coachId"]),
 
     nutritionGoals: defineTable({
         userId: v.id("users"),
