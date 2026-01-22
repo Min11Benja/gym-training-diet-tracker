@@ -94,7 +94,7 @@ export default function ClientDetailPage() {
                                     <Calendar size={16} />
                                     {new Date(workout.date).toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
                                 </div>
-                                {/* @ts-expect-error status field added recently */}
+
                                 <span className={`text-xs px-2 py-1 rounded capitalize ${workout.status === 'completed' ? 'bg-green-500/20 text-green-500' : 'bg-zinc-800 text-zinc-400'}`}>{workout.status || 'Planned'}</span>
                             </div>
                             <div className="space-y-2">

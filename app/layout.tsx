@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 import ConvexClientProvider from "./ConvexClientProvider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { LanguageProvider } from "@/components/language-provider";
 
 export default function RootLayout({
   children,
@@ -18,10 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`${inter.variable} font-sans antialiased bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white min-h-screen`}>
         <ThemeProvider>
-          <ConvexClientProvider>{children}</ConvexClientProvider>
+          <LanguageProvider>
+            <ConvexClientProvider>{children}</ConvexClientProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

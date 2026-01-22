@@ -5,8 +5,19 @@ import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, Lock, ArrowRight, User } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Suspense } from "react";
+
+export const dynamic = "force-dynamic";
 
 export default function AuthPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <AuthForm />
+        </Suspense>
+    );
+}
+
+function AuthForm() {
     const { signIn } = useAuthActions();
     const [step, setStep] = useState<"signIn" | "signUp">("signIn");
     const [email, setEmail] = useState("");

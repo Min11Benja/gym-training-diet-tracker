@@ -38,7 +38,7 @@ export default function WorkoutLogPage() {
 
     const updateExercise = (index: number, field: string, value: string | number) => {
         const newEx = [...exercises];
-        // @ts-expect-error dynamic assignment
+
         newEx[index][field] = value;
         setExercises(newEx);
     };

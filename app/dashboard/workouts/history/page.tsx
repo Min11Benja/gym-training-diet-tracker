@@ -33,7 +33,7 @@ export default function WorkoutHistoryPage() {
                                 <span className="text-sm font-medium text-white">{new Date(workout.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</span>
                             </div>
                             <span className="text-xs px-2 py-1 rounded-full bg-green-500/10 text-green-500 font-medium capitalize">
-                                {/* @ts-expect-error status field added recently */}
+
                                 {workout.status || 'completed'}
                             </span>
                         </div>
