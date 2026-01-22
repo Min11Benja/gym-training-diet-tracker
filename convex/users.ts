@@ -36,3 +36,42 @@ export const updateProfile = mutation({
         return { success: true };
     },
 });
+
+export const createClient = mutation({
+    args: {
+        email: v.string(),
+        name: v.string(),
+        age: v.optional(v.number()),
+        sex: v.optional(v.string()),
+        height: v.optional(v.number()),
+        goal: v.optional(v.union(v.literal("fat_loss"), v.literal("muscle_gain"), v.literal("recomp"))),
+    },
+    handler: async (ctx, args) => {
+        const userId = await getAuthUserId(ctx);
+        if (!userId) throw new Error("Not authenticated");
+
+        const coach = await ctx.db.get(userId);
+        if (!coach || coach.role !== "coach") throw new Error("Only coaches can add clients");
+
+        // Check if user with this email already exists
+        const existing = await ctx.db
+            .query("users")
+            .filter((q) => q.eq(q.field("email"), args.email))
+            .first();
+
+        if (existing) throw new Error("A user with this email already exists");
+
+        const clientId = await ctx.db.insert("users", {
+            email: args.email,
+            name: args.name,
+            role: "client",
+            coachId: userId,
+            age: args.age,
+            sex: args.sex,
+            height: args.height || 170,
+            goal: args.goal,
+        });
+
+        return { clientId, success: true };
+    },
+});

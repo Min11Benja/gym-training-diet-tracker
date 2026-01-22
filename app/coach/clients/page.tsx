@@ -1,16 +1,50 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { useState } from "react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
-import { Search, MoreHorizontal, MessageCircle } from "lucide-react";
+import { Search, MoreHorizontal, MessageCircle, X } from "lucide-react";
 
 export default function ClientsPage() {
     const clients = useQuery(api.coach.getClients);
     // Fallback for demo if no clients assigned
     const allClients = useQuery(api.coach.getAllClientsForDemo);
+    const createClient = useMutation(api.users.createClient);
 
     const displayClients = (clients && clients.length > 0) ? clients : allClients;
+
+    const [showModal, setShowModal] = useState(false);
+    const [formData, setFormData] = useState({
+        email: "",
+        name: "",
+        age: "",
+        sex: "male",
+        height: "170",
+        goal: "muscle_gain" as "fat_loss" | "muscle_gain" | "recomp",
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        try {
+            await createClient({
+                email: formData.email,
+                name: formData.name,
+                age: formData.age ? parseInt(formData.age) : undefined,
+                sex: formData.sex,
+                height: formData.height ? parseInt(formData.height) : undefined,
+                goal: formData.goal,
+            });
+            setShowModal(false);
+            setFormData({ email: "", name: "", age: "", sex: "male", height: "170", goal: "muscle_gain" });
+        } catch (error) {
+            alert(error instanceof Error ? error.message : "Failed to create client");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="space-y-6">
@@ -22,13 +56,128 @@ export default function ClientsPage() {
                         <input placeholder="Search clients..." className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white rounded-xl pl-10 pr-4 py-2 border border-zinc-200 dark:border-zinc-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59] w-64" />
                     </div>
                     <button
-                        onClick={() => alert("Add Client feature coming soon!")}
+                        onClick={() => setShowModal(true)}
                         className="bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 shadow-lg"
                     >
                         + Add Client
                     </button>
                 </div>
             </div>
+
+            {/* Add Client Modal */}
+            {showModal && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                        <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+                            <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Add New Client</h3>
+                            <button
+                                onClick={() => setShowModal(false)}
+                                className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
+                            >
+                                <X size={20} className="text-zinc-600 dark:text-zinc-400" />
+                            </button>
+                        </div>
+                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                    Email *
+                                </label>
+                                <input
+                                    type="email"
+                                    required
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    placeholder="client@example.com"
+                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                    Full Name *
+                                </label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    placeholder="John Doe"
+                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Age
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={formData.age}
+                                        onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                                        placeholder="25"
+                                        className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Sex
+                                    </label>
+                                    <select
+                                        value={formData.sex}
+                                        onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
+                                        className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                    >
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                    Height (cm)
+                                </label>
+                                <input
+                                    type="number"
+                                    value={formData.height}
+                                    onChange={(e) => setFormData({ ...formData, height: e.target.value })}
+                                    placeholder="170"
+                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                    Goal
+                                </label>
+                                <select
+                                    value={formData.goal}
+                                    onChange={(e) => setFormData({ ...formData, goal: e.target.value as "fat_loss" | "muscle_gain" | "recomp" })}
+                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                >
+                                    <option value="muscle_gain">Muscle Gain</option>
+                                    <option value="fat_loss">Fat Loss</option>
+                                    <option value="recomp">Recomposition</option>
+                                </select>
+                            </div>
+
+                            <div className="flex gap-3 pt-4">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModal(false)}
+                                    className="flex-1 px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="flex-1 px-4 py-3 bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black rounded-xl font-bold hover:opacity-90 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? "Adding..." : "Add Client"}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
 
             <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm dark:shadow-none">
                 <table className="w-full text-left text-sm">

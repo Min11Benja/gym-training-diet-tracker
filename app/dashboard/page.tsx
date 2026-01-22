@@ -36,7 +36,7 @@ export default function DashboardPage() {
             {/* Header */}
             <div>
                 <p className="text-zinc-600 dark:text-gray-400 text-sm uppercase tracking-wider font-semibold">Today&apos;s Overview</p>
-                <h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">{new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}</h2>
+                <h2 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}</h2>
             </div>
 
             {/* Nutrition Cards */}
