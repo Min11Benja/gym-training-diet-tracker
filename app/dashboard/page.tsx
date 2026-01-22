@@ -11,6 +11,7 @@ export default function DashboardPage() {
     const nutrition = useQuery(api.nutrition.getNutrition, { date: today });
     const workout = useQuery(api.workouts.getWorkoutByDate, { date: today });
     const metrics = useQuery(api.metrics.getMetrics); // Fetches last 30
+    const todaysWorkout = useQuery(api.workoutPlans.getTodaysWorkout);
 
     // --- Derived State ---
     const caloriesGoal = nutrition?.goals.calories || 2500;
@@ -83,6 +84,64 @@ export default function DashboardPage() {
                     {workoutStatus === "Done" ? <CheckCircle2 size={24} /> : <Circle size={24} />}
                 </div>
             </Link>
+
+            {/* Assigned Workout from Coach */}
+            {todaysWorkout?.todaysWorkout && (
+                <div className="bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/10 p-6 rounded-2xl border border-emerald-200 dark:border-emerald-800/50">
+                    <div className="flex items-start justify-between mb-4">
+                        <div>
+                            <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1">
+                                Assigned by Coach
+                            </p>
+                            <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
+                                {todaysWorkout.plan.name}
+                            </h3>
+                            <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+                                {todaysWorkout.todaysWorkout.dayName}'s Workout
+                            </p>
+                        </div>
+                        {todaysWorkout.alreadyLogged && (
+                            <CheckCircle2 className="text-emerald-600 dark:text-emerald-400" size={24} />
+                        )}
+                    </div>
+
+                    <div className="space-y-3">
+                        {todaysWorkout.todaysWorkout.exercises.map((exercise: { name: string; sets: number; reps: string; weight?: number; equipment?: string; notes?: string }, idx: number) => (
+                            <div key={idx} className="bg-white/50 dark:bg-black/20 p-4 rounded-xl border border-emerald-100 dark:border-emerald-900/30">
+                                <div className="flex items-start justify-between">
+                                    <div className="flex-1">
+                                        <p className="font-semibold text-zinc-900 dark:text-white">{exercise.name}</p>
+                                        {exercise.equipment && (
+                                            <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">{exercise.equipment}</p>
+                                        )}
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-sm font-bold text-zinc-900 dark:text-white">
+                                            {exercise.sets} × {exercise.reps}
+                                        </p>
+                                        {exercise.weight && (
+                                            <p className="text-xs text-zinc-600 dark:text-zinc-400">{exercise.weight} kg</p>
+                                        )}
+                                    </div>
+                                </div>
+                                {exercise.notes && (
+                                    <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 italic">
+                                        💡 {exercise.notes}
+                                    </p>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    <Link
+                        href="/dashboard/workouts"
+                        className="mt-4 w-full block text-center bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black px-4 py-3 rounded-xl font-bold hover:opacity-90 transition-opacity shadow-sm"
+                    >
+                        {todaysWorkout.alreadyLogged ? "View Logged Workout" : "Start Workout"}
+                    </Link>
+                </div>
+            )}
+
 
             {/* Weight Trend */}
             <Link href="/dashboard/metrics" className="block bg-white dark:bg-[#151515] p-5 rounded-2xl border border-zinc-200 dark:border-white/10 hover:shadow-md dark:hover:shadow-none transition-shadow">

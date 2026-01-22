@@ -57,7 +57,19 @@ export default defineSchema({
                 dayOfWeek: v.number(), // 0 = Monday, 6 = Sunday
                 dayName: v.string(), // "Monday", "Tuesday", etc.
                 exercises: v.array(
-                    v.object({ name: v.string(), sets: v.number(), reps: v.string(), weight: v.optional(v.number()), notes: v.optional(v.string()) })
+                    v.object({
+                        name: v.string(),
+                        sets: v.number(),
+                        reps: v.string(),
+                        weight: v.optional(v.number()),
+                        notes: v.optional(v.string()),
+                        // ExerciseDB reference data
+                        exerciseId: v.optional(v.string()),
+                        gifUrl: v.optional(v.string()),
+                        instructions: v.optional(v.array(v.string())),
+                        primaryMuscles: v.optional(v.array(v.string())),
+                        equipment: v.optional(v.string()),
+                    })
                 ),
             })
         ),
