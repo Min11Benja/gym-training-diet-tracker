@@ -7,9 +7,11 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff, Lock, Mail, Shield, User, ArrowRight, LayoutDashboard } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { LanguageSelector } from "@/components/language-selector";
+import { useAuthActions } from "@convex-dev/auth/react";
 
 export default function LoginPage() {
     const router = useRouter();
+    const { signIn } = useAuthActions();
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
@@ -23,26 +25,55 @@ export default function LoginPage() {
         setError("");
         setIsLoading(true);
 
-        // Mock Auth Logic
-        setTimeout(() => {
-            if (email === "coach@coachencontrol.com" && password === "admin123") {
-                router.push("/coach/dashboard");
-            } else if (email === "client@coachencontrol.com" && password === "client123") {
-                router.push("/dashboard");
-            } else {
-                setError("Invalid credentials. Please try again.");
-                setIsLoading(false);
+        try {
+            console.log("Attempting sign-in for:", email);
+            await signIn("password", { email, password, flow: "signIn" });
+            console.log("Sign-in successful, redirecting...");
+            // Use hard redirect to ensure cookies are fresh and state is clean
+            window.location.href = email.includes("coach") ? "/coach/dashboard" : "/dashboard";
+        } catch (err) {
+            console.warn("Sign-in failed, checking for demo auto-signup...");
+            // Auto-signup for demo users if they don't exist
+            if (email.includes("coachencontrol.com")) {
+                try {
+                    await signIn("password", { email, password, flow: "signUp" });
+                    console.log("Auto-signup successful, redirecting...");
+                    window.location.href = email.includes("coach") ? "/coach/dashboard" : "/dashboard";
+                    return;
+                } catch (e) {
+                    console.error("SignUp failed", e);
+                }
             }
-        }, 1000);
+            setError("Invalid credentials. Please try again.");
+            setIsLoading(false);
+        }
     };
 
-    const fillDemo = (role: "coach" | "client") => {
-        if (role === "coach") {
-            setEmail("coach@coachencontrol.com");
-            setPassword("admin123");
-        } else {
-            setEmail("client@coachencontrol.com");
-            setPassword("client123");
+    const fillDemo = async (role: "coach" | "client") => {
+        const demoEmail = role === "coach" ? "coach@coachencontrol.com" : "client@coachencontrol.com";
+        const demoPassword = role === "coach" ? "admin123" : "client123";
+
+        setEmail(demoEmail);
+        setPassword(demoPassword);
+        setIsLoading(true);
+        setError("");
+
+        try {
+            console.log(`Demo ${role} login attempt...`);
+            await signIn("password", { email: demoEmail, password: demoPassword, flow: "signIn" });
+            console.log("Demo login successful");
+            window.location.href = role === "coach" ? "/coach/dashboard" : "/dashboard";
+        } catch (err) {
+            try {
+                console.log(`Demo ${role} signup attempt...`);
+                await signIn("password", { email: demoEmail, password: demoPassword, flow: "signUp" });
+                console.log("Demo signup successful");
+                window.location.href = role === "coach" ? "/coach/dashboard" : "/dashboard";
+            } catch (e) {
+                console.error("Demo auth failed", e);
+                setError("Demo authentication failed. Check server logs.");
+                setIsLoading(false);
+            }
         }
     };
 
@@ -156,26 +187,14 @@ export default function LoginPage() {
                     {/* Demo Buttons */}
                     <div className="grid grid-cols-2 gap-4">
                         <button
-                            onClick={() => {
-                                setEmail("coach@coachencontrol.com");
-                                setPassword("admin123");
-                                // Trigger immediate login
-                                setIsLoading(true);
-                                setTimeout(() => router.push("/coach/dashboard"), 800);
-                            }}
+                            onClick={() => fillDemo("coach")}
                             className="flex items-center justify-center gap-2 p-3 bg-emerald-50 dark:bg-[#B2FF59]/10 border border-emerald-200 dark:border-[#B2FF59]/20 rounded-xl text-emerald-700 dark:text-[#B2FF59] hover:bg-emerald-100 dark:hover:bg-[#B2FF59]/20 transition-colors font-medium text-sm"
                         >
                             <Shield size={16} />
                             Login as Coach
                         </button>
                         <button
-                            onClick={() => {
-                                setEmail("client@coachencontrol.com");
-                                setPassword("client123");
-                                // Trigger immediate login
-                                setIsLoading(true);
-                                setTimeout(() => router.push("/dashboard"), 800);
-                            }}
+                            onClick={() => fillDemo("client")}
                             className="flex items-center justify-center gap-2 p-3 bg-zinc-50 dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-xl text-zinc-700 dark:text-white hover:bg-zinc-100 dark:hover:bg-white/10 transition-colors font-medium text-sm"
                         >
                             <User size={16} />

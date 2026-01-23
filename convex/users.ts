@@ -45,13 +45,23 @@ export const createClient = mutation({
         sex: v.optional(v.string()),
         height: v.optional(v.number()),
         goal: v.optional(v.union(v.literal("fat_loss"), v.literal("muscle_gain"), v.literal("recomp"))),
+        phone: v.optional(v.string()),
     },
     handler: async (ctx, args) => {
         const userId = await getAuthUserId(ctx);
+        console.log("createClient mutation - checking auth userId:", userId);
         if (!userId) throw new Error("Not authenticated");
 
         const coach = await ctx.db.get(userId);
-        if (!coach || coach.role !== "coach") throw new Error("Only coaches can add clients");
+        if (!coach) throw new Error("User record not found");
+
+        // Auto-assign coach role for demo coach if newly created through auth
+        if (coach.email === "coach@coachencontrol.com" && coach.role !== "coach") {
+            await ctx.db.patch(userId, { role: "coach" });
+            coach.role = "coach";
+        }
+
+        if (coach.role !== "coach") throw new Error("Only coaches can add clients");
 
         // Check if user with this email already exists
         const existing = await ctx.db
@@ -70,6 +80,7 @@ export const createClient = mutation({
             sex: args.sex,
             height: args.height || 170,
             goal: args.goal,
+            phone: args.phone,
         });
 
         return { clientId, success: true };

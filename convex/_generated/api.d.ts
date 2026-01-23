@@ -10,10 +10,13 @@
 
 import type * as auth from "../auth.js";
 import type * as coach from "../coach.js";
+import type * as http from "../http.js";
 import type * as metrics from "../metrics.js";
 import type * as nutrition from "../nutrition.js";
 import type * as progress from "../progress.js";
+import type * as seed from "../seed.js";
 import type * as users from "../users.js";
+import type * as workoutPlans from "../workoutPlans.js";
 import type * as workouts from "../workouts.js";
 
 import type {
@@ -25,10 +28,13 @@ import type {
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   coach: typeof coach;
+  http: typeof http;
   metrics: typeof metrics;
   nutrition: typeof nutrition;
   progress: typeof progress;
+  seed: typeof seed;
   users: typeof users;
+  workoutPlans: typeof workoutPlans;
   workouts: typeof workouts;
 }>;
 

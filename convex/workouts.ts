@@ -31,7 +31,7 @@ export const logWorkout = mutation({
                 sets: v.number(),
                 reps: v.union(v.string(), v.object({ left: v.number(), right: v.number() })),
                 weight: v.optional(v.number()),
-                effort: v.optional(v.string()),
+                effort: v.optional(v.union(v.literal("easy"), v.literal("medium"), v.literal("hard"))),
                 notes: v.optional(v.string()),
             })
         ),

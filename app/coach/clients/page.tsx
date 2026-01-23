@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useQuery, useMutation } from "convex/react";
+import { useQuery, useMutation, useConvexAuth } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Link from "next/link";
-import { Search, MoreHorizontal, MessageCircle, X } from "lucide-react";
+import { Search, MoreHorizontal, MessageCircle, X, Copy, ExternalLink, Send, Key } from "lucide-react";
 
 export default function ClientsPage() {
     const clients = useQuery(api.coach.getClients);
@@ -22,8 +22,10 @@ export default function ClientsPage() {
         sex: "male",
         height: "170",
         goal: "muscle_gain" as "fat_loss" | "muscle_gain" | "recomp",
+        phone: "",
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [newClientCredentials, setNewClientCredentials] = useState<{ email: string; password: string; name: string } | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,14 +38,87 @@ export default function ClientsPage() {
                 sex: formData.sex,
                 height: formData.height ? parseInt(formData.height) : undefined,
                 goal: formData.goal,
+                phone: formData.phone || undefined,
             });
-            setShowModal(false);
-            setFormData({ email: "", name: "", age: "", sex: "male", height: "170", goal: "muscle_gain" });
+            // Show credentials instead of closing immediately
+            setNewClientCredentials({
+                email: formData.email,
+                name: formData.name,
+                password: "CoachEnControl2025", // Default password
+            });
         } catch (error) {
             alert(error instanceof Error ? error.message : "Failed to create client");
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleViewCredentials = (client: any) => {
+        setFormData({ ...formData, phone: client.phone || "", email: client.email, name: client.name || "" });
+        setNewClientCredentials({
+            email: client.email,
+            name: client.name || "Client",
+            password: "CoachEnControl2025",
+        });
+        setShowModal(true);
+    };
+
+    const handleWhatsAppResend = (client: any) => {
+        const message = `¡Hola ${client.name || "Client"}! 👋
+
+Te recuerdo tus credenciales para CoachEnControl:
+
+🔐 *Tus credenciales de acceso:*
+📧 Email: ${client.email}
+🔑 Contraseña: CoachEnControl2025
+
+🌐 Accede aquí: ${window.location.origin}/login
+
+¡Nos vemos en el gym! 💪`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const phone = client.phone?.replace(/\D/g, '');
+        const whatsappUrl = phone
+            ? `https://wa.me/${phone}?text=${encodedMessage}`
+            : `https://wa.me/?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setNewClientCredentials(null);
+        setFormData({ email: "", name: "", age: "", sex: "male", height: "170", goal: "muscle_gain", phone: "" });
+    };
+
+    const handleWhatsAppShare = () => {
+        if (!newClientCredentials) return;
+
+        const message = `¡Hola ${newClientCredentials.name}! 👋
+
+Te he registrado en CoachEnControl, tu plataforma para seguimiento de entrenamientos y nutrición.
+
+🔐 *Tus credenciales de acceso:*
+📧 Email: ${newClientCredentials.email}
+🔑 Contraseña: ${newClientCredentials.password}
+
+🌐 Accede aquí: ${window.location.origin}/login
+
+Por favor cambia tu contraseña después del primer inicio de sesión.
+
+¡Nos vemos en el gym! 💪`;
+
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = formData.phone
+            ? `https://wa.me/${formData.phone.replace(/\D/g, '')}?text=${encodedMessage}`
+            : `https://wa.me/?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+    };
+
+    const copyCredentials = () => {
+        if (!newClientCredentials) return;
+        const text = `Email: ${newClientCredentials.email}\nPassword: ${newClientCredentials.password}`;
+        navigator.clipboard.writeText(text);
+        alert("Credentials copied to clipboard!");
     };
 
     return (
@@ -69,112 +144,180 @@ export default function ClientsPage() {
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                     <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
                         <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-                            <h3 className="text-xl font-bold text-zinc-900 dark:text-white">Add New Client</h3>
+                            <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
+                                {newClientCredentials ? (formData.email ? "Client Credentials" : "Client Added Successfully!") : "Add New Client"}
+                            </h3>
                             <button
-                                onClick={() => setShowModal(false)}
+                                onClick={handleCloseModal}
                                 className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
                             >
                                 <X size={20} className="text-zinc-600 dark:text-zinc-400" />
                             </button>
                         </div>
-                        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                    Email *
-                                </label>
-                                <input
-                                    type="email"
-                                    required
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    placeholder="client@example.com"
-                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
-                                />
+
+                        {newClientCredentials ? (
+                            <div className="p-6 space-y-6">
+                                <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-xl text-center">
+                                    <p className="text-emerald-600 dark:text-emerald-400 font-medium">
+                                        Client has been created and linked to your account.
+                                    </p>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="bg-zinc-50 dark:bg-zinc-800/50 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700">
+                                        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-2 uppercase tracking-wider font-semibold">Access Credentials</p>
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-zinc-600 dark:text-zinc-300">Email:</span>
+                                                <span className="font-mono text-zinc-900 dark:text-white">{newClientCredentials.email}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-zinc-600 dark:text-zinc-300">Password:</span>
+                                                <span className="font-mono text-zinc-900 dark:text-white">{newClientCredentials.password}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex gap-3">
+                                        <button
+                                            onClick={copyCredentials}
+                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white rounded-xl font-medium transition-colors"
+                                        >
+                                            <Copy size={18} />
+                                            Copy
+                                        </button>
+                                        <button
+                                            onClick={handleWhatsAppShare}
+                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-[#25D366] hover:bg-[#128C7E] text-white rounded-xl font-bold transition-colors shadow-lg"
+                                        >
+                                            <MessageCircle size={18} />
+                                            WhatsApp
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <button
+                                    onClick={handleCloseModal}
+                                    className="w-full px-4 py-3 border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 rounded-xl transition-colors"
+                                >
+                                    Done
+                                </button>
                             </div>
-                            <div>
-                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                    Full Name *
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    placeholder="John Doe"
-                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
-                                />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4">
+                        ) : (
+                            <form onSubmit={handleSubmit} className="p-6 space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                        Age
+                                        Email *
                                     </label>
                                     <input
-                                        type="number"
-                                        value={formData.age}
-                                        onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                                        placeholder="25"
+                                        type="email"
+                                        required
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        placeholder="client@example.com"
                                         className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
                                     />
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                        Sex
+                                        Full Name *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        required
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                        placeholder="John Doe"
+                                        className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                    />
+                                </div>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                            Age
+                                        </label>
+                                        <input
+                                            type="number"
+                                            value={formData.age}
+                                            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                                            placeholder="25"
+                                            className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                            Sex
+                                        </label>
+                                        <select
+                                            value={formData.sex}
+                                            onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
+                                            className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                        >
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Height (cm)
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={formData.height}
+                                        onChange={(e) => setFormData({ ...formData, height: e.target.value })}
+                                        placeholder="170"
+                                        className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Goal
                                     </label>
                                     <select
-                                        value={formData.sex}
-                                        onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
+                                        value={formData.goal}
+                                        onChange={(e) => setFormData({ ...formData, goal: e.target.value as "fat_loss" | "muscle_gain" | "recomp" })}
                                         className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
                                     >
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+                                        <option value="muscle_gain">Muscle Gain</option>
+                                        <option value="fat_loss">Fat Loss</option>
+                                        <option value="recomp">Recomposition</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                    Height (cm)
-                                </label>
-                                <input
-                                    type="number"
-                                    value={formData.height}
-                                    onChange={(e) => setFormData({ ...formData, height: e.target.value })}
-                                    placeholder="170"
-                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-                                    Goal
-                                </label>
-                                <select
-                                    value={formData.goal}
-                                    onChange={(e) => setFormData({ ...formData, goal: e.target.value as "fat_loss" | "muscle_gain" | "recomp" })}
-                                    className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
-                                >
-                                    <option value="muscle_gain">Muscle Gain</option>
-                                    <option value="fat_loss">Fat Loss</option>
-                                    <option value="recomp">Recomposition</option>
-                                </select>
-                            </div>
 
-                            <div className="flex gap-3 pt-4">
-                                <button
-                                    type="button"
-                                    onClick={() => setShowModal(false)}
-                                    className="flex-1 px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="flex-1 px-4 py-3 bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black rounded-xl font-bold hover:opacity-90 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {isSubmitting ? "Adding..." : "Add Client"}
-                                </button>
-                            </div>
-                        </form>
+                                <div>
+                                    <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                                        Phone Number (WhatsApp)
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        value={formData.phone}
+                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                        placeholder="+52 1 234 567 8900"
+                                        className="w-full px-4 py-2 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:focus:ring-[#B2FF59]"
+                                    />
+                                    <p className="text-[10px] text-zinc-500 mt-1 italic">Include country code for direct WhatsApp sharing (e.g., 521...)</p>
+                                </div>
+
+                                <div className="flex gap-3 pt-4">
+                                    <button
+                                        type="button"
+                                        onClick={handleCloseModal}
+                                        className="flex-1 px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="flex-1 px-4 py-3 bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black rounded-xl font-bold hover:opacity-90 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isSubmitting ? "Adding..." : "Add Client"}
+                                    </button>
+                                </div>
+                            </form>
+                        )}
+
                     </div>
                 </div>
             )}
@@ -220,7 +363,18 @@ export default function ClientsPage() {
                                 </td>
                                 <td className="p-4 text-right">
                                     <div className="flex justify-end gap-2 text-zinc-400">
-                                        <button className="p-2 hover:bg-zinc-800 rounded-lg hover:text-white transition-colors">
+                                        <button
+                                            onClick={() => handleViewCredentials(client)}
+                                            className="p-2 hover:bg-zinc-800 rounded-lg hover:text-[#B2FF59] transition-colors"
+                                            title="View Credentials"
+                                        >
+                                            <Key size={18} />
+                                        </button>
+                                        <button
+                                            onClick={() => handleWhatsAppResend(client)}
+                                            className="p-2 hover:bg-zinc-800 rounded-lg hover:text-[#25D366] transition-colors"
+                                            title="Send WhatsApp"
+                                        >
                                             <MessageCircle size={18} />
                                         </button>
                                         <Link href={`/coach/clients/${client._id}`} className="p-2 hover:bg-zinc-800 rounded-lg hover:text-white transition-colors">
