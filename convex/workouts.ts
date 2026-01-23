@@ -41,6 +41,14 @@ export const logWorkout = mutation({
       }),
     ),
     notes: v.optional(v.string()),
+    cardio: v.optional(v.object({
+      steps: v.optional(v.number()),
+      running: v.optional(v.object({
+        distance: v.number(),
+        duration: v.number(),
+        pace: v.optional(v.string()),
+      })),
+    })),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();

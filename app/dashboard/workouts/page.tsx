@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Plus, Save, History, Calendar, Trash2, Upload } from "lucide-react";
+import { Plus, Save, History, Calendar, Trash2, Upload, Footprints, Activity } from "lucide-react";
 import { WorkoutCalendar } from "@/components/workout-calendar";
 
 export default function WorkoutLogPage() {
@@ -19,14 +19,20 @@ export default function WorkoutLogPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [exercises, setExercises] = useState<any[]>([]);
   const [notes, setNotes] = useState("");
+  const [cardio, setCardio] = useState<{
+    steps?: number;
+    running?: { distance: number; duration: number; pace?: string };
+  }>({});
 
   useEffect(() => {
     if (workout) {
       setExercises(workout.exercises);
       setNotes(workout.notes || "");
+      setCardio(workout.cardio || {});
     } else {
       setExercises([]);
       setNotes("");
+      setCardio({});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workout]);
@@ -68,6 +74,7 @@ export default function WorkoutLogPage() {
         })),
         notes,
         status: "completed",
+        cardio: Object.keys(cardio).length > 0 ? cardio : undefined,
       });
       alert("Workout saved!");
     } catch (err) {
@@ -115,6 +122,80 @@ export default function WorkoutLogPage() {
             day: "numeric",
           })}
         </span>
+      </div>
+
+      {/* Cardio Section */}
+      <div className="bg-white dark:bg-[#151515] p-5 rounded-2xl border border-zinc-200 dark:border-white/10 shadow-sm space-y-4">
+        <h3 className="font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+          <Activity size={18} className="text-emerald-600 dark:text-[#B2FF59]" />
+          Cardio
+        </h3>
+
+        <div className="space-y-4">
+          {/* Steps */}
+          <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-white/10">
+            <label className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 block mb-2 font-bold flex items-center gap-2">
+              <Footprints size={14} />
+              Daily Steps
+            </label>
+            <input
+              type="number"
+              value={cardio.steps || ""}
+              onChange={(e) => setCardio({ ...cardio, steps: e.target.value ? Number(e.target.value) : undefined })}
+              placeholder="10000"
+              className="w-full bg-transparent text-2xl font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none"
+            />
+          </div>
+
+          {/* Running */}
+          <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-white/10 space-y-3">
+            <label className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 block font-bold">
+              Running
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-500 block mb-1">Distance (km)</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={cardio.running?.distance || ""}
+                  onChange={(e) => setCardio({
+                    ...cardio,
+                    running: e.target.value ? {
+                      distance: Number(e.target.value),
+                      duration: cardio.running?.duration || 0,
+                      pace: cardio.running?.pace
+                    } : undefined
+                  })}
+                  placeholder="5.0"
+                  className="w-full bg-white dark:bg-zinc-800 text-lg font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none p-2 rounded-lg border border-zinc-200 dark:border-zinc-700"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-500 block mb-1">Duration (min)</label>
+                <input
+                  type="number"
+                  value={cardio.running?.duration || ""}
+                  onChange={(e) => setCardio({
+                    ...cardio,
+                    running: e.target.value ? {
+                      distance: cardio.running?.distance || 0,
+                      duration: Number(e.target.value),
+                      pace: cardio.running?.pace
+                    } : undefined
+                  })}
+                  placeholder="30"
+                  className="w-full bg-white dark:bg-zinc-800 text-lg font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none p-2 rounded-lg border border-zinc-200 dark:border-zinc-700"
+                />
+              </div>
+            </div>
+            {cardio.running?.distance && cardio.running?.duration && (
+              <div className="text-xs text-zinc-500 dark:text-zinc-400 text-center pt-2 border-t border-zinc-200 dark:border-zinc-700">
+                Pace: {(cardio.running.duration / cardio.running.distance).toFixed(2)} min/km
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="space-y-4">
@@ -191,12 +272,12 @@ export default function WorkoutLogPage() {
                       key={effort}
                       onClick={() => updateExercise(i, "effort", effort)}
                       className={`flex-1 text-xs py-2 rounded-lg capitalize font-medium transition-all ${ex.effort === effort
-                          ? effort === "hard"
-                            ? "bg-red-500 text-white shadow-md"
-                            : effort === "medium"
-                              ? "bg-yellow-500 text-black shadow-md"
-                              : "bg-green-500 text-black shadow-md"
-                          : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        ? effort === "hard"
+                          ? "bg-red-500 text-white shadow-md"
+                          : effort === "medium"
+                            ? "bg-yellow-500 text-black shadow-md"
+                            : "bg-green-500 text-black shadow-md"
+                        : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                         }`}
                     >
                       {effort}

@@ -114,6 +114,22 @@ export default function ClientDetailPage() {
                                         <span className="font-mono text-zinc-500 dark:text-gray-500">{ex.sets} x {ex.reps} @ {ex.weight}kg</span>
                                     </div>
                                 ))}
+                                {workout.cardio && (
+                                    <div className="pt-2 mt-2 border-t border-zinc-200 dark:border-white/10 space-y-1">
+                                        {workout.cardio.steps && (
+                                            <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                                                <span className="font-bold">🚶 Steps:</span>
+                                                <span className="font-mono">{workout.cardio.steps.toLocaleString()}</span>
+                                            </div>
+                                        )}
+                                        {workout.cardio.running && (
+                                            <div className="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+                                                <span className="font-bold">🏃 Running:</span>
+                                                <span className="font-mono">{workout.cardio.running.distance}km in {workout.cardio.running.duration}min</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     ))}

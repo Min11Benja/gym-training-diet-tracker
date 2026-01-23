@@ -100,6 +100,14 @@ export const assignWorkout = mutation({
             })
         ),
         notes: v.optional(v.string()),
+        cardio: v.optional(v.object({
+            steps: v.optional(v.number()),
+            running: v.optional(v.object({
+                distance: v.number(),
+                duration: v.number(),
+                pace: v.optional(v.string()),
+            })),
+        })),
     },
     handler: async (ctx, args) => {
         // Auth check
@@ -119,6 +127,7 @@ export const assignWorkout = mutation({
                 // effort is optional/undefined for planned
             })),
             notes: args.notes,
+            cardio: args.cardio,
         });
     },
 });

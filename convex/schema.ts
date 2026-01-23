@@ -43,6 +43,15 @@ export default defineSchema({
         assignedBy: v.optional(v.id("users")), // Coach who assigned this
         planId: v.optional(v.id("workoutPlans")), // If part of a plan
         completedAt: v.optional(v.number()), // Timestamp when marked complete
+        // Cardio tracking
+        cardio: v.optional(v.object({
+            steps: v.optional(v.number()), // Daily steps
+            running: v.optional(v.object({
+                distance: v.number(), // in km
+                duration: v.number(), // in minutes
+                pace: v.optional(v.string()), // e.g. "5:30/km"
+            })),
+        })),
     }).index("by_user_date", ["userId", "date"]),
 
     // Workout Plans (assigned by coach to client)

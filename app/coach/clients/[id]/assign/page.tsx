@@ -136,6 +136,10 @@ export default function AssignWorkoutPage() {
       weight?: number;
       gifUrl?: string;
     }[],
+    cardio: {} as {
+      steps?: number;
+      running?: { distance: number; duration: number; pace?: string };
+    },
   });
 
   const [exerciseSearch, setExerciseSearch] = useState("");
@@ -213,12 +217,13 @@ export default function AssignWorkoutPage() {
         date: workoutData.date,
         exercises: workoutData.exercises,
         notes: workoutData.notes,
+        cardio: Object.keys(workoutData.cardio).length > 0 ? workoutData.cardio : undefined,
       });
       router.push(`/coach/clients/${clientId}`);
     } catch (error) {
       alert(
         "Error assigning workout: " +
-          (error instanceof Error ? error.message : "Unknown error"),
+        (error instanceof Error ? error.message : "Unknown error"),
       );
     }
   };
@@ -248,13 +253,12 @@ export default function AssignWorkoutPage() {
                     <div
                       className={`
                                             relative z-10 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300
-                                            ${
-                                              isActive
-                                                ? "bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black scale-110 shadow-lg"
-                                                : isCompleted
-                                                  ? "bg-emerald-500/20 text-emerald-600 dark:text-[#B2FF59]"
-                                                  : "bg-zinc-100 dark:bg-zinc-900 text-zinc-400"
-                                            }
+                                            ${isActive
+                          ? "bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black scale-110 shadow-lg"
+                          : isCompleted
+                            ? "bg-emerald-500/20 text-emerald-600 dark:text-[#B2FF59]"
+                            : "bg-zinc-100 dark:bg-zinc-900 text-zinc-400"
+                        }
                                         `}
                     >
                       {isCompleted ? (
@@ -339,11 +343,10 @@ export default function AssignWorkoutPage() {
                             exercises: [],
                           }));
                         }}
-                        className={`p-6 rounded-2xl border transition-all flex flex-col items-center gap-3 text-center ${
-                          workoutMode === "custom"
-                            ? "bg-emerald-500/10 border-emerald-500 dark:border-[#B2FF59] text-emerald-600 dark:text-[#B2FF59]"
-                            : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500"
-                        }`}
+                        className={`p-6 rounded-2xl border transition-all flex flex-col items-center gap-3 text-center ${workoutMode === "custom"
+                          ? "bg-emerald-500/10 border-emerald-500 dark:border-[#B2FF59] text-emerald-600 dark:text-[#B2FF59]"
+                          : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500"
+                          }`}
                       >
                         <div
                           className={`p-3 rounded-xl ${workoutMode === "custom" ? "bg-emerald-500 dark:bg-[#B2FF59] text-white dark:text-black" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400"}`}
@@ -359,11 +362,10 @@ export default function AssignWorkoutPage() {
                       </button>
                       <button
                         onClick={() => setWorkoutMode("template")}
-                        className={`p-6 rounded-2xl border transition-all flex flex-col items-center gap-3 text-center ${
-                          workoutMode === "template"
-                            ? "bg-emerald-500/10 border-emerald-500 dark:border-[#B2FF59] text-emerald-600 dark:text-[#B2FF59]"
-                            : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500"
-                        }`}
+                        className={`p-6 rounded-2xl border transition-all flex flex-col items-center gap-3 text-center ${workoutMode === "template"
+                          ? "bg-emerald-500/10 border-emerald-500 dark:border-[#B2FF59] text-emerald-600 dark:text-[#B2FF59]"
+                          : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-500"
+                          }`}
                       >
                         <div
                           className={`p-3 rounded-xl ${workoutMode === "template" ? "bg-emerald-500 dark:bg-[#B2FF59] text-white dark:text-black" : "bg-zinc-100 dark:bg-zinc-800 text-zinc-400"}`}
@@ -392,11 +394,10 @@ export default function AssignWorkoutPage() {
                             <button
                               key={template.id}
                               onClick={() => handleSelectTemplate(template.id)}
-                              className={`p-4 rounded-xl border text-left transition-all flex items-center gap-4 ${
-                                selectedTemplate === template.id
-                                  ? "bg-emerald-500/10 border-emerald-500 scale-[1.02]"
-                                  : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300"
-                              }`}
+                              className={`p-4 rounded-xl border text-left transition-all flex items-center gap-4 ${selectedTemplate === template.id
+                                ? "bg-emerald-500/10 border-emerald-500 scale-[1.02]"
+                                : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300"
+                                }`}
                             >
                               <div
                                 className={`w-10 h-10 rounded-lg flex items-center justify-center ${template.color} text-white`}
@@ -502,15 +503,13 @@ export default function AssignWorkoutPage() {
                                 ? null
                                 : handleAddExercise(ex.name, ex.gifUrl)
                             }
-                            className={`overflow-hidden rounded-2xl border transition-all hover:scale-[1.02] flex ${
-                              viewMode === "grid"
-                                ? "flex-col"
-                                : "flex-row items-center p-2"
-                            } ${
-                              isAdded
+                            className={`overflow-hidden rounded-2xl border transition-all hover:scale-[1.02] flex ${viewMode === "grid"
+                              ? "flex-col"
+                              : "flex-row items-center p-2"
+                              } ${isAdded
                                 ? "bg-emerald-500/10 border-emerald-500/30 ring-1 ring-emerald-500/20"
                                 : "bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 hover:border-emerald-500/50"
-                            }`}
+                              }`}
                           >
                             <div
                               className={`${viewMode === "grid" ? "w-full aspect-square" : "w-16 h-16"} bg-zinc-100 dark:bg-zinc-800 flex-shrink-0 relative`}
@@ -679,7 +678,7 @@ export default function AssignWorkoutPage() {
                             type="number"
                             value={
                               ex.weight === undefined ||
-                              isNaN(ex.weight as number)
+                                isNaN(ex.weight as number)
                                 ? ""
                                 : ex.weight
                             }
@@ -778,11 +777,10 @@ export default function AssignWorkoutPage() {
             <button
               onClick={prevStep}
               disabled={currentStep === 1}
-              className={`flex items-center gap-2 px-6 py-2 rounded-xl text-sm font-bold transition-colors ${
-                currentStep === 1
-                  ? "text-zinc-300 dark:text-zinc-700 cursor-not-allowed"
-                  : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-              }`}
+              className={`flex items-center gap-2 px-6 py-2 rounded-xl text-sm font-bold transition-colors ${currentStep === 1
+                ? "text-zinc-300 dark:text-zinc-700 cursor-not-allowed"
+                : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                }`}
             >
               <ChevronLeft size={18} /> Back
             </button>
