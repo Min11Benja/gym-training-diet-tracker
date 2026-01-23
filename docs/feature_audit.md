@@ -394,6 +394,140 @@ NEW: "Save 1 client = 4 months paid for"
 
 ---
 
+## Implementation Status Update (Dashboard Audit - Jan 22, 2026)
+
+### Current Implementation State
+
+**✅ COMPLETED:**
+- Core database schema (users, workouts, nutrition, metrics, progress)
+- Client dashboard MVP (5 screens: Home, Workouts, Nutrition, Metrics, Progress)
+- Coach dashboard basic structure (clients list, client detail)
+- Mobile-first UI design
+- Authentication flow (Convex Auth)
+- Basic CRUD operations for all data models
+
+**❌ NOT IMPLEMENTED (Critical Gaps):**
+1. **AI Setback Mitigation Engine** - Core differentiator, completely missing
+2. **Coach Approval Dashboard** - No AI message review system
+3. **Risk Score Tracking** - No client engagement monitoring (🟢🟡🔴)
+4. **Retention Metrics Dashboard** - No coach-facing ROI analytics
+5. **Salvage Calculator** - No off-plan meal recovery logic
+6. **Coach Tone Settings** - No AI customization options
+
+**⚠️ PARTIALLY IMPLEMENTED:**
+- Desktop/tablet responsiveness (coach sidebar works, client dashboard cramped)
+- Workout effort tracking (exists but no AI interpretation)
+- Progress tracking (exists but needs deprioritization per feature audit)
+
+---
+
+### Database Schema Status
+
+**Current Tables:**
+```typescript
+✅ users (with role, coachId)
+✅ workouts (with exercises, effort, notes)
+✅ nutritionGoals + foodLogs
+✅ bodyMetrics
+✅ progress
+```
+
+**Missing Tables (Critical for MVP):**
+```typescript
+❌ aiMessages (draft, status, trigger)
+❌ coachSettings (tone, autoApprove, templates)
+❌ retentionMetrics (retention tracking)
+❌ clientActivity (risk score calculation)
+```
+
+---
+
+### User Flow Analysis
+
+#### Client Dashboard Current State:
+- **Nutrition Tracking:** Manual input, no AI salvage
+- **Workout Logging:** Works well on mobile, needs desktop/tablet optimization
+- **Metrics:** Basic charting, no trend analysis
+- **Progress Photos:** Functional but needs simplification
+
+**Critical Client UX Issues:**
+1. Bottom nav wastes space on desktop/tablet
+2. Content max-width 512px too narrow for wide screens
+3. No "off-plan meal" quick action
+4. Daily pass/fail mentality instead of weekly trends
+
+#### Coach Dashboard Current State:
+- **Client List:** Basic display, no risk scores
+- **Client Detail:** Comprehensive tabs, missing AI features
+- **Overview Dashboard:** ❌ DOES NOT EXIST (should be `/coach/dashboard`)
+
+**Critical Coach UX Issues:**
+1. No AI message drafts to review
+2. No early warning system for at-risk clients
+3. No retention metrics visibility (ROI proof)
+4. No "reach out" quick actions
+
+---
+
+### Immediate Action Items (Week 1-2)
+
+**Priority 1: AI Foundation**
+1. Add missing database tables (`aiMessages`, `coachSettings`)
+2. Implement basic AI draft generation (OpenAI integration)
+3. Create `/coach/dashboard` with pending drafts view
+
+**Priority 2: Risk Score System**
+1. Add `clientActivity` tracking
+2. Calculate 🟢🟡🔴 engagement status
+3. Display on coach client list
+
+**Priority 3: Responsive Refactor**
+1. Client dashboard: Conditional sidebar on ≥768px
+2. Expand content max-width to 1024px
+3. Grid layouts for nutrition/metrics cards
+
+---
+
+### Feature Implementation Roadmap (Updated)
+
+**Phase 1 (2-3 weeks) - Dashboard Overhaul:**
+- [ ] Create `/coach/dashboard` overview page
+- [ ] Add `aiMessages` + `coachSettings` tables
+- [ ] Implement AI draft generation (basic)
+- [ ] Build coach approval UI
+- [ ] Add risk score calculation
+- [ ] Responsive layout refactor (client + coach)
+
+**Phase 2 (1 month) - AI Enhancement:**
+- [ ] Coach tone customization settings
+- [ ] Salvage calculator for off-plan meals
+- [ ] Retention metrics dashboard
+- [ ] WhatsApp message queue integration
+
+**Phase 3 (2+ months) - Scale Features:**
+- [ ] Voice logging (AI transcription)
+- [ ] Team features (assistant coaches)
+- [ ] Advanced analytics and reporting
+
+---
+
+### Technical Debt Identified
+
+**Code Quality:**
+- ⚠️ Excessive use of `any` types in workout/nutrition data
+- ⚠️ No error boundaries for query failures
+- ⚠️ Mobile-first CSS hardcoded everywhere
+
+**Performance:**
+- ⚠️ No pagination on client lists (will break at 50+ clients)
+- ⚠️ No lazy loading for progress photos
+- ✅ Convex real-time queries are efficient
+
+**Testing:**
+- ❌ Zero tests (need Playwright for critical flows)
+
+---
+
 ## Appendix: Feature Kill List
 
 These were considered but explicitly rejected:
@@ -403,3 +537,4 @@ These were considered but explicitly rejected:
 ❌ **Social feed** → Distraction from core value  
 ❌ **Gamification badges** → Coaches said "clients don't care"  
 ❌ **Video exercise library** → Commodity feature
+

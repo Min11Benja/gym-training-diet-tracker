@@ -5,16 +5,17 @@ import {
     nextjsMiddlewareRedirect,
 } from "@convex-dev/auth/nextjs/server";
 
-const isSignInPage = createRouteMatcher(["/auth"]);
+const isSignInPage = createRouteMatcher(["/auth", "/login"]);
 const isProtectedRoute = createRouteMatcher(["/dashboard(.*)", "/coach(.*)", "/onboarding"]);
 
 export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
+    console.log("Middleware executing for:", request.nextUrl.pathname);
     if (isSignInPage(request) && (await convexAuth.isAuthenticated())) {
         return nextjsMiddlewareRedirect(request, "/onboarding"); // Redirect to onboarding to check role
     }
 
     if (isProtectedRoute(request) && !convexAuth.isAuthenticated()) {
-        return nextjsMiddlewareRedirect(request, "/auth");
+        return nextjsMiddlewareRedirect(request, "/login");
     }
 });
 

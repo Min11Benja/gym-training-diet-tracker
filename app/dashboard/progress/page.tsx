@@ -55,34 +55,34 @@ export default function ProgressPage() {
 
     return (
         <div className="max-w-md mx-auto space-y-8 pb-24">
-            <h2 className="text-2xl font-bold tracking-tight">Progress Photos</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">Progress Photos</h2>
 
-            <form onSubmit={handeUpload} className="bg-zinc-900 p-6 rounded-3xl border border-zinc-800 space-y-5 shadow-sm">
+            <form onSubmit={handeUpload} className="bg-white dark:bg-[#151515] p-6 rounded-3xl border border-zinc-200 dark:border-white/10 space-y-5 shadow-sm dark:shadow-none">
                 <div className="flex justify-between items-center mb-2">
-                    <h3 className="text-sm font-semibold text-zinc-400 flex items-center gap-2">
+                    <h3 className="text-sm font-semibold text-zinc-600 dark:text-zinc-400 flex items-center gap-2">
                         <Camera size={16} />
                         Upload New Photo
                     </h3>
-                    <input type="date" value={date} onChange={e => setDate(e.target.value)} className="bg-zinc-950 rounded-lg px-2 py-1 text-xs text-white border border-zinc-800" />
+                    <input type="date" value={date} onChange={e => setDate(e.target.value)} className="bg-zinc-50 dark:bg-zinc-900 rounded-lg px-2 py-1 text-xs text-zinc-900 dark:text-white border border-zinc-200 dark:border-white/10" />
                 </div>
 
                 <div
-                    className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-3 h-40 ${selectedImage ? 'border-blue-500/50 bg-blue-500/5' : 'border-zinc-800 hover:border-zinc-600 hover:bg-zinc-800/50'}`}
+                    className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-3 h-40 ${selectedImage ? 'border-emerald-500/50 dark:border-[#B2FF59]/50 bg-emerald-50 dark:bg-emerald-500/5' : 'border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-800/50'}`}
                     onClick={() => fileInputRef.current?.click()}
                 >
                     {selectedImage ? (
                         <>
-                            <div className="h-10 w-10 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                            <div className="h-10 w-10 bg-emerald-600 dark:bg-[#B2FF59] rounded-full flex items-center justify-center text-white dark:text-black">
                                 <CheckIcon size={20} />
                             </div>
-                            <p className="text-blue-500 font-medium text-sm truncate max-w-full px-4">{selectedImage.name}</p>
+                            <p className="text-emerald-600 dark:text-[#B2FF59] font-medium text-sm truncate max-w-full px-4">{selectedImage.name}</p>
                         </>
                     ) : (
                         <>
-                            <div className="h-10 w-10 bg-zinc-800 rounded-full flex items-center justify-center text-zinc-500">
+                            <div className="h-10 w-10 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center text-zinc-500 dark:text-zinc-400">
                                 <Upload size={20} />
                             </div>
-                            <p className="text-zinc-500 text-sm">Tap to select photo</p>
+                            <p className="text-zinc-500 dark:text-zinc-400 text-sm">Tap to select photo</p>
                         </>
                     )}
                     <input type="file" ref={fileInputRef} onChange={handleImageSelect} className="hidden" accept="image/*" />
@@ -91,7 +91,7 @@ export default function ProgressPage() {
                 <button
                     type="submit"
                     disabled={!selectedImage || isUploading}
-                    className="w-full bg-blue-600 rounded-2xl py-4 font-bold hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-900/20 active:scale-95 transition-all"
+                    className="w-full bg-emerald-600 dark:bg-[#B2FF59] text-white dark:text-black rounded-2xl py-4 font-bold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg active:scale-95 transition-all"
                 >
                     {isUploading ? "Uploading..." : "Save Photo"}
                 </button>
@@ -100,14 +100,14 @@ export default function ProgressPage() {
             <div className="space-y-6">
                 {entries?.map((entry) => (
                     <div key={entry._id} className="space-y-3">
-                        <div className="flex items-center gap-2 text-zinc-400 text-sm pl-1">
+                        <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400 text-sm pl-1">
                             <Calendar size={14} />
                             <p className="font-medium">{new Date(entry.date).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                             {entry.photos.map((url, i) => (
                                 url && (
-                                    <div key={i} className="relative aspect-[3/4] bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-800 shadow-sm group">
+                                    <div key={i} className="relative aspect-[3/4] bg-zinc-100 dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm group">
                                         <Image
                                             src={url}
                                             alt="Progress"
