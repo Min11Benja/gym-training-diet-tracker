@@ -19,6 +19,7 @@ export interface ExerciseSearchResult {
     equipment: string;
     bodyPart: string;
     target: string;
+    gifUrl: string;
 }
 
 const API_BASE = "https://exercisedb-api.vercel.app";

@@ -112,6 +112,7 @@ export const assignWorkout = mutation({
             userId: args.clientId,
             date: args.date,
             status: "planned",
+            assignedBy: userId,
             exercises: args.exercises.map(e => ({
                 ...e,
                 weight: e.weight || 0, // ensure weight is number if needed, or leave optional

@@ -97,7 +97,14 @@ export default function ClientDetailPage() {
                                     <Calendar size={16} className="text-emerald-600 dark:text-[#B2FF59]" />
                                     {new Date(workout.date).toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}
                                 </div>
-                                <span className={`text-xs px-2 py-1 rounded-lg font-bold capitalize ${workout.status === 'completed' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'}`}>{workout.status || 'Planned'}</span>
+                                <div className="flex gap-2">
+                                    {!workout.assignedBy && workout.status === 'completed' && (
+                                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold border border-amber-500/20 uppercase tracking-tighter">Extra Session</span>
+                                    )}
+                                    <span className={`text-xs px-2 py-1 rounded-lg font-bold capitalize ${workout.status === 'completed' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400'}`}>
+                                        {workout.status || 'Planned'}
+                                    </span>
+                                </div>
                             </div>
                             <div className="space-y-2">
                                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
