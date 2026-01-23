@@ -23,16 +23,19 @@ export default function WorkoutLogPage() {
     steps?: number;
     running?: { distance: number; duration: number; pace?: string };
   }>({});
+  const [showCardio, setShowCardio] = useState(false);
 
   useEffect(() => {
     if (workout) {
       setExercises(workout.exercises);
       setNotes(workout.notes || "");
       setCardio(workout.cardio || {});
+      setShowCardio(!!workout.cardio && (!!workout.cardio.steps || !!workout.cardio.running));
     } else {
       setExercises([]);
       setNotes("");
       setCardio({});
+      setShowCardio(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workout]);
@@ -124,79 +127,100 @@ export default function WorkoutLogPage() {
         </span>
       </div>
 
-      {/* Cardio Section */}
-      <div className="bg-white dark:bg-[#151515] p-5 rounded-2xl border border-zinc-200 dark:border-white/10 shadow-sm space-y-4">
-        <h3 className="font-bold text-zinc-900 dark:text-white flex items-center gap-2">
-          <Activity size={18} className="text-emerald-600 dark:text-[#B2FF59]" />
-          Cardio
-        </h3>
-
-        <div className="space-y-4">
-          {/* Steps */}
-          <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-white/10">
-            <label className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 block mb-2 font-bold flex items-center gap-2">
-              <Footprints size={14} />
-              Daily Steps
-            </label>
-            <input
-              type="number"
-              value={cardio.steps || ""}
-              onChange={(e) => setCardio({ ...cardio, steps: e.target.value ? Number(e.target.value) : undefined })}
-              placeholder="10000"
-              className="w-full bg-transparent text-2xl font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none"
-            />
+      {/* Cardio Section - Collapsible */}
+      {!showCardio ? (
+        <button
+          onClick={() => setShowCardio(true)}
+          className="w-full border-2 border-dashed border-emerald-200 dark:border-emerald-900 py-4 rounded-2xl text-emerald-600 dark:text-[#B2FF59] hover:bg-emerald-50 dark:hover:bg-emerald-950/20 transition-all flex items-center justify-center gap-2 font-bold"
+        >
+          <Activity size={20} />
+          <span>+ Log Cardio Session</span>
+        </button>
+      ) : (
+        <div className="bg-white dark:bg-[#151515] p-5 rounded-2xl border border-zinc-200 dark:border-white/10 shadow-sm space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-zinc-900 dark:text-white flex items-center gap-2">
+              <Activity size={18} className="text-emerald-600 dark:text-[#B2FF59]" />
+              Cardio
+            </h3>
+            <button
+              onClick={() => {
+                setShowCardio(false);
+                setCardio({});
+              }}
+              className="text-xs text-zinc-400 hover:text-red-500 transition-colors"
+            >
+              Remove
+            </button>
           </div>
 
-          {/* Running */}
-          <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-white/10 space-y-3">
-            <label className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 block font-bold">
-              Running
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-500 block mb-1">Distance (km)</label>
-                <input
-                  type="number"
-                  step="0.1"
-                  value={cardio.running?.distance || ""}
-                  onChange={(e) => setCardio({
-                    ...cardio,
-                    running: e.target.value ? {
-                      distance: Number(e.target.value),
-                      duration: cardio.running?.duration || 0,
-                      pace: cardio.running?.pace
-                    } : undefined
-                  })}
-                  placeholder="5.0"
-                  className="w-full bg-white dark:bg-zinc-800 text-lg font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none p-2 rounded-lg border border-zinc-200 dark:border-zinc-700"
-                />
-              </div>
-              <div>
-                <label className="text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-500 block mb-1">Duration (min)</label>
-                <input
-                  type="number"
-                  value={cardio.running?.duration || ""}
-                  onChange={(e) => setCardio({
-                    ...cardio,
-                    running: e.target.value ? {
-                      distance: cardio.running?.distance || 0,
-                      duration: Number(e.target.value),
-                      pace: cardio.running?.pace
-                    } : undefined
-                  })}
-                  placeholder="30"
-                  className="w-full bg-white dark:bg-zinc-800 text-lg font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none p-2 rounded-lg border border-zinc-200 dark:border-zinc-700"
-                />
-              </div>
+          <div className="space-y-4">
+            {/* Steps */}
+            <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-white/10">
+              <label className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 block mb-2 font-bold flex items-center gap-2">
+                <Footprints size={14} />
+                Daily Steps
+              </label>
+              <input
+                type="number"
+                value={cardio.steps || ""}
+                onChange={(e) => setCardio({ ...cardio, steps: e.target.value ? Number(e.target.value) : undefined })}
+                placeholder="10000"
+                className="w-full bg-transparent text-2xl font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none"
+              />
             </div>
-            {cardio.running?.distance && cardio.running?.duration && (
-              <div className="text-xs text-zinc-500 dark:text-zinc-400 text-center pt-2 border-t border-zinc-200 dark:border-zinc-700">
-                Pace: {(cardio.running.duration / cardio.running.distance).toFixed(2)} min/km
+
+            {/* Running */}
+            <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-xl border border-zinc-200 dark:border-white/10 space-y-3">
+              <label className="text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400 block font-bold">
+                Running
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-500 block mb-1">Distance (km)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={cardio.running?.distance || ""}
+                    onChange={(e) => setCardio({
+                      ...cardio,
+                      running: e.target.value ? {
+                        distance: Number(e.target.value),
+                        duration: cardio.running?.duration || 0,
+                        pace: cardio.running?.pace
+                      } : undefined
+                    })}
+                    placeholder="5.0"
+                    className="w-full bg-white dark:bg-zinc-800 text-lg font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none p-2 rounded-lg border border-zinc-200 dark:border-zinc-700"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-wider text-zinc-500 dark:text-zinc-500 block mb-1">Duration (min)</label>
+                  <input
+                    type="number"
+                    value={cardio.running?.duration || ""}
+                    onChange={(e) => setCardio({
+                      ...cardio,
+                      running: e.target.value ? {
+                        distance: cardio.running?.distance || 0,
+                        duration: Number(e.target.value),
+                        pace: cardio.running?.pace
+                      } : undefined
+                    })}
+                    placeholder="30"
+                    className="w-full bg-white dark:bg-zinc-800 text-lg font-bold text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none p-2 rounded-lg border border-zinc-200 dark:border-zinc-700"
+                  />
+                </div>
               </div>
-            )}
+              {cardio.running?.distance && cardio.running?.duration && (
+                <div className="text-xs text-zinc-500 dark:text-zinc-400 text-center pt-2 border-t border-zinc-200 dark:border-zinc-700">
+                  Pace: {(cardio.running.duration / cardio.running.distance).toFixed(2)} min/km
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="space-y-4">
         {exercises.length > 0 ? (
